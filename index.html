@@ -130,7 +130,10 @@
         padding: 0.5rem;
         overflow: hidden;
         height: auto;
-        min-height: 300px;
+        min-height: 400px;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
       }
       
       .nav-btn {
@@ -143,7 +146,7 @@
         height: 1rem;
       }
       
-      /* Mobile: Show only ONE card at a time */
+      /* Mobile: Show only ONE card at a time - force single column */
       .testimonial-slide .grid {
         display: flex !important;
         flex-direction: column !important;
@@ -153,6 +156,7 @@
         width: 100%;
         margin: 0 auto;
         gap: 0 !important;
+        grid-template-columns: 1fr !important;
       }
       
       /* Mobile card styling - full width, vertical layout */
@@ -161,12 +165,13 @@
         width: 100% !important;
         min-width: 0;
         margin: 0 auto;
-        padding: 1rem;
+        padding: 1.5rem;
         word-wrap: break-word;
         overflow-wrap: break-word;
         hyphens: auto;
         box-sizing: border-box;
         display: block;
+        flex-shrink: 0;
       }
       
       .testimonial-slide p {
@@ -179,7 +184,23 @@
         margin-bottom: 0.75rem;
       }
       
-      /* Hide extra cards on mobile - only show the first one */
+      /* CRITICAL: Hide all cards except the first one on mobile */
+      .testimonial-slide .bg-white:nth-child(n+2) {
+        display: none !important;
+      }
+      
+      /* Ensure grid shows only first card */
+      .testimonial-slide .grid > *:nth-child(n+2) {
+        display: none !important;
+      }
+      
+      /* Force single card display on mobile */
+      .testimonial-slide .grid {
+        grid-template-columns: 1fr !important;
+        grid-template-rows: 1fr !important;
+      }
+      
+      /* Hide all but first testimonial card on mobile */
       .testimonial-slide .bg-white:not(:first-child) {
         display: none !important;
       }
@@ -1010,6 +1031,12 @@
         console.warn('Slider elements not found, skipping initialization.');
         return;
       }
+      
+      console.log('Initializing slider...');
+      console.log('Total slides found:', totalSlides);
+      console.log('Slider container:', sliderContainer);
+      console.log('Dots found:', dots.length);
+      
       updateSlider();
       startAutoSlide();
     }
