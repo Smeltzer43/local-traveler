@@ -126,10 +126,11 @@
     
     /* Modern Mobile-First Testimonial Slider */
     @media (max-width: 768px) {
-      /* Mobile: Single card layout */
+      /* Mobile: Single card layout - Research-based approach */
       .testimonial-slider {
         height: auto;
         min-height: 500px;
+        background: white;
       }
       
       .testimonial-slide {
@@ -138,56 +139,72 @@
         align-items: center !important;
         justify-content: center !important;
         height: auto;
-        min-height: 400px;
+        min-height: 450px;
       }
       
-      /* Mobile grid: Single column, single card */
+      /* Mobile: Force single column, single card layout */
       .testimonial-slide .grid {
         display: grid !important;
         grid-template-columns: 1fr !important;
         grid-template-rows: 1fr !important;
         gap: 0 !important;
-        width: 100%;
-        max-width: 100%;
-        margin: 0;
-        padding: 0;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
       }
       
-      /* Mobile: Show only the first testimonial card */
+      /* Mobile: Show only the first testimonial card per slide */
       .testimonial-slide .grid > *:nth-child(n+2) {
         display: none !important;
       }
       
-      /* Mobile card styling */
+      /* Mobile: Force single card display with full width */
       .testimonial-slide .bg-white {
         width: 100% !important;
         max-width: 100% !important;
         margin: 0 !important;
         padding: 1.5rem !important;
-        box-sizing: border-box;
+        box-sizing: border-box !important;
         display: block !important;
+        min-height: 400px !important;
+        flex-shrink: 0 !important;
       }
       
-      /* Mobile text styling */
+      /* Mobile text styling - Ensure full text visibility */
       .testimonial-slide p {
-        font-size: 1rem;
-        line-height: 1.6;
-        margin-bottom: 1rem;
-        word-wrap: break-word;
-        overflow-wrap: break-word;
+        font-size: 1rem !important;
+        line-height: 1.6 !important;
+        margin-bottom: 1rem !important;
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+        white-space: normal !important;
+        text-overflow: unset !important;
+        overflow: visible !important;
       }
       
-      /* Mobile navigation */
+      /* Mobile navigation - Enhanced touch targets */
       .nav-btn {
         padding: 0.75rem;
         z-index: 30;
         background: rgba(255, 255, 255, 0.95);
         border: 1px solid rgba(0, 0, 0, 0.1);
+        min-width: 44px;
+        min-height: 44px;
       }
       
       .nav-btn svg {
         width: 1.25rem;
         height: 1.25rem;
+      }
+      
+      /* Mobile: Ensure proper spacing and layout */
+      .testimonial-slide .flex {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 100% !important;
       }
     }
     
@@ -197,19 +214,26 @@
         padding: 2rem;
       }
       
+      /* Desktop: 3 cards per slide */
       .testimonial-slide .grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 1.5rem;
-        width: 100%;
-        max-width: 1200px;
-        margin: 0 auto;
+        display: grid !important;
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 1.5rem !important;
+        width: 100% !important;
+        max-width: 1200px !important;
+        margin: 0 auto !important;
+      }
+      
+      /* Desktop: Show all cards */
+      .testimonial-slide .grid > * {
+        display: block !important;
       }
       
       .testimonial-slide .bg-white {
         width: 100%;
         max-width: 100%;
         padding: 1.5rem;
+        min-height: 300px;
       }
     }
     
@@ -982,9 +1006,11 @@
           dot.classList.toggle('bg-slate-300', !isActive);
         });
 
-        // Enhanced debugging
+        // Enhanced debugging with mobile/desktop detection
+        const isMobile = window.innerWidth <= 768;
         console.log(`Slider Update - Current: ${currentSlide}, Total: ${totalSlides}, TranslateX: ${translateX}%`);
-        console.log(`Screen width: ${window.innerWidth}px, Mobile: ${window.innerWidth <= 768}`);
+        console.log(`Screen width: ${window.innerWidth}px, Mobile: ${isMobile}`);
+        console.log(`Mobile layout: Single card per slide, Desktop: 3 cards per slide`);
 
         // Use shorter transition time for better performance
         setTimeout(() => {
@@ -1052,11 +1078,21 @@
     // Handle window resize for responsive slider
     function handleResize() {
       console.log('Window resized, updating slider...');
-      updateSlider();
+      const isMobile = window.innerWidth <= 768;
+      console.log(`Resize detected - Mobile: ${isMobile}, Width: ${window.innerWidth}px`);
+      
+      // Force re-layout on resize
+      setTimeout(() => {
+        updateSlider();
+      }, 100);
     }
     
-    // Add resize listener
-    window.addEventListener('resize', handleResize);
+    // Add resize listener with debouncing
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(handleResize, 250);
+    });
 
     // Optimized Event Listeners
     if (nextBtn) {
