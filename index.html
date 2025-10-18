@@ -61,179 +61,244 @@
       transition: transform 240ms ease; 
     }
     
-    /* Optimized Testimonial Slider Styles */
-    .testimonial-slider {
+    /* Clean Testimonial Slider Styles */
+    .testimonial-slider-container {
       position: relative;
       width: 100%;
-      overflow: hidden;
+      max-width: 1200px;
+      margin: 0 auto;
+      background: white;
       border-radius: 1rem;
       box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-      /* Performance optimizations */
-      contain: layout style paint;
-      transform: translateZ(0);
+      overflow: hidden;
+    }
+    
+    .slider-wrapper {
+      position: relative;
+      overflow: hidden;
+      width: 100%;
     }
     
     .slider-container {
       display: flex;
-      transition: transform 0.4s ease-out;
-      will-change: transform;
-      /* Performance optimizations */
-      contain: layout style paint;
-      transform: translateZ(0);
+      transition: transform 0.5s ease-in-out;
     }
     
-    .testimonial-slide {
-      min-width: 100%;
-      flex-shrink: 0;
-      padding: 1rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      /* Performance optimizations */
-      contain: layout style paint;
-      transform: translateZ(0);
-    }
-    
-    /* Optimized dot styles */
-    .dot {
-      cursor: pointer;
-      transition: background-color 0.2s ease;
-      border: 2px solid transparent;
-      /* Performance optimizations */
-      will-change: background-color;
-    }
-    
-    .dot:hover {
-      background-color: #0fb9b1 !important;
-    }
-    
-    .dot.active {
-      background-color: #0fb9b1 !important;
-    }
-    
-    /* Optimized navigation buttons */
-    .nav-btn {
-      transition: background-color 0.2s ease, box-shadow 0.2s ease;
-      backdrop-filter: blur(10px);
-      /* Performance optimizations */
-      will-change: background-color, box-shadow;
-    }
-    
-    .nav-btn:hover {
-      background-color: rgba(255, 255, 255, 0.95);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-    
-    /* Modern Mobile-First Testimonial Slider */
-    @media (max-width: 768px) {
-      /* Mobile: Single card layout - Research-based approach */
-      .testimonial-slider {
-        height: auto;
-        min-height: 500px;
-        background: white;
-      }
-      
-      .testimonial-slide {
-        padding: 1rem;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        height: auto;
-        min-height: 450px;
-      }
-      
-      /* Mobile: Force single column, single card layout */
-      .testimonial-slide .grid {
-        display: grid !important;
-        grid-template-columns: 1fr !important;
-        grid-template-rows: 1fr !important;
-        gap: 0 !important;
-        width: 100% !important;
-        max-width: 100% !important;
-        margin: 0 !important;
-        padding: 0 !important;
-      }
-      
-      /* Mobile: Show only the first testimonial card per slide */
-      .testimonial-slide .grid > *:nth-child(n+2) {
-        display: none !important;
-      }
-      
-      /* Mobile: Force single card display with full width */
-      .testimonial-slide .bg-white {
-        width: 100% !important;
-        max-width: 100% !important;
-        margin: 0 !important;
-        padding: 1.5rem !important;
-        box-sizing: border-box !important;
-        display: block !important;
-        min-height: 400px !important;
-        flex-shrink: 0 !important;
-      }
-      
-      /* Mobile text styling - Ensure full text visibility */
-      .testimonial-slide p {
-        font-size: 1rem !important;
-        line-height: 1.6 !important;
-        margin-bottom: 1rem !important;
-        word-wrap: break-word !important;
-        overflow-wrap: break-word !important;
-        white-space: normal !important;
-        text-overflow: unset !important;
-        overflow: visible !important;
-      }
-      
-      /* Mobile navigation - Enhanced touch targets */
-      .nav-btn {
-        padding: 0.75rem;
-        z-index: 30;
-        background: rgba(255, 255, 255, 0.95);
-        border: 1px solid rgba(0, 0, 0, 0.1);
-        min-width: 44px;
-        min-height: 44px;
-      }
-      
-      .nav-btn svg {
-        width: 1.25rem;
-        height: 1.25rem;
-      }
-      
-      /* Mobile: Ensure proper spacing and layout */
-      .testimonial-slide .flex {
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important;
-        justify-content: center !important;
-        width: 100% !important;
-      }
-    }
-    
-    /* Desktop: Multiple cards layout */
+    /* Desktop: 2 slides */
     @media (min-width: 769px) {
-      .testimonial-slide {
+      .slider-container {
+        width: 200%; /* 2 slides */
+      }
+      
+      .slide {
+        width: 50%; /* Each slide takes half the container */
+        flex-shrink: 0;
         padding: 2rem;
       }
       
-      /* Desktop: 3 cards per slide */
-      .testimonial-slide .grid {
-        display: grid !important;
-        grid-template-columns: repeat(3, 1fr) !important;
-        gap: 1.5rem !important;
-        width: 100% !important;
-        max-width: 1200px !important;
-        margin: 0 auto !important;
+      /* Hide mobile slides on desktop */
+      .mobile-slide {
+        display: none;
+      }
+    }
+    
+    /* Mobile: 6 individual slides */
+    @media (max-width: 768px) {
+      .slider-container {
+        width: 600%; /* 6 slides */
       }
       
-      /* Desktop: Show all cards */
-      .testimonial-slide .grid > * {
-        display: block !important;
+      .slide {
+        width: 16.666%; /* Each slide takes 1/6 of container */
+        flex-shrink: 0;
+        padding: 1rem;
       }
       
-      .testimonial-slide .bg-white {
-        width: 100%;
-        max-width: 100%;
-        padding: 1.5rem;
-        min-height: 300px;
+      /* Hide desktop slides on mobile */
+      .desktop-slide-1,
+      .desktop-slide-2 {
+        display: none;
+      }
+    }
+    
+    .testimonials-grid {
+      display: grid;
+      gap: 1.5rem;
+      height: 100%;
+    }
+    
+    /* Desktop: 3 columns */
+    @media (min-width: 769px) {
+      .testimonials-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    
+    /* Mobile: 1 column */
+    @media (max-width: 768px) {
+      .testimonials-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      /* Mobile: Show only first card */
+      .testimonials-grid .testimonial-card:nth-child(n+2) {
+        display: none;
+      }
+    }
+    
+    .testimonial-card {
+      background: white;
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      transition: box-shadow 0.3s ease;
+      height: fit-content;
+    }
+    
+    .testimonial-card:hover {
+      box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+    }
+    
+    .rating {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    
+    .stars {
+      color: #fbbf24;
+      font-size: 1rem;
+    }
+    
+    .score {
+      margin-left: 0.5rem;
+      font-size: 0.875rem;
+      color: #64748b;
+    }
+    
+    .testimonial-text {
+      color: #374151;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+    }
+    
+    .author {
+      display: flex;
+      align-items: center;
+    }
+    
+    .avatar {
+      width: 2.5rem;
+      height: 2.5rem;
+      background: #e0f2fe;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: #0369a1;
+      font-size: 0.875rem;
+      margin-right: 0.75rem;
+    }
+    
+    .name {
+      font-weight: 600;
+      color: #1f2937;
+      font-size: 0.95rem;
+    }
+    
+    .verified {
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+    
+    /* Navigation */
+    .slider-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.9);
+      border: none;
+      border-radius: 50%;
+      width: 3rem;
+      height: 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    
+    .slider-nav:hover {
+      background: white;
+      transform: translateY(-50%) scale(1.1);
+    }
+    
+    .slider-nav.prev {
+      left: 1rem;
+    }
+    
+    .slider-nav.next {
+      right: 1rem;
+    }
+    
+    .slider-nav svg {
+      color: #64748b;
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+    
+    .slider-nav:hover svg {
+      color: #374151;
+    }
+    
+    /* Dots */
+    .slider-dots {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 1.5rem;
+    }
+    
+    .dot {
+      width: 0.75rem;
+      height: 0.75rem;
+      border-radius: 50%;
+      border: none;
+      background: #cbd5e1;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .dot.active {
+      background: #0ea5e9;
+      transform: scale(1.2);
+    }
+    
+    .dot:hover {
+      background: #94a3b8;
+      transform: scale(1.1);
+    }
+    
+    /* Show/hide dots based on screen size */
+    @media (min-width: 769px) {
+      .mobile-dot {
+        display: none;
+      }
+      .desktop-dot {
+        display: block;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .desktop-dot {
+        display: none;
+      }
+      .mobile-dot {
+        display: block;
       }
     }
     
@@ -450,145 +515,239 @@
         </div>
       </div>
       
-      <div class="testimonial-slider relative overflow-hidden rounded-xl bg-white border border-slate-200 shadow-lg">
+      <!-- Simple Testimonial Slider -->
+      <div class="testimonial-slider-container">
         <!-- Navigation Arrows -->
-        <button id="prevBtn" class="nav-btn absolute left-4 top-1/2 transform -translate-y-1/2 z-10 bg-white/90 hover:bg-white rounded-full p-3 shadow-lg">
-          <svg class="w-6 h-6 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+        <button id="prevBtn" class="slider-nav prev">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M15 19l-7-7 7-7"/>
           </svg>
         </button>
-        <button id="nextBtn" class="nav-btn absolute right-4 top-1/2 transform -translate-y-1/2 z-10 bg-white/90 hover:bg-white rounded-full p-3 shadow-lg">
-          <svg class="w-6 h-6 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        <button id="nextBtn" class="slider-nav next">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 5l7 7-7 7"/>
           </svg>
         </button>
 
-        <!-- Slider Container -->
-        <div id="sliderContainer" class="slider-container flex">
-          <!-- Slide 1: Testimonials 1-3 -->
-          <div class="testimonial-slide min-w-full flex-shrink-0 p-2 md:p-4 flex items-center justify-center">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6 w-full max-w-4xl px-4">
-              <!-- Testimonial 1 -->
-              <div class="bg-white rounded-xl p-4 md:p-6 shadow-lg hover:shadow-xl transition-shadow w-full">
-                <div class="flex items-center mb-3 md:mb-4">
-                  <div class="flex text-yellow-400 text-sm md:text-base">
-                    ★★★★★
+        <!-- Slider Wrapper -->
+        <div class="slider-wrapper">
+          <div id="sliderContainer" class="slider-container">
+            <!-- Desktop: Slide 1 (Testimonials 1-3) / Mobile: Individual slides -->
+            <div class="slide desktop-slide-1">
+              <div class="testimonials-grid">
+                <!-- Testimonial 1 -->
+                <div class="testimonial-card">
+                  <div class="rating">
+                    <span class="stars">★★★★★</span>
+                    <span class="score">5/5</span>
                   </div>
-                  <span class="ml-2 text-xs md:text-sm text-slate-600">5/5</span>
-                </div>
-                <p class="text-slate-700 mb-3 md:mb-4 text-sm md:text-base leading-relaxed">"I have been a network marketer since 1969 and I have never seen a more lucrative and generous pay plan. Simple design, but oh so powerful."</p>
-                <div class="flex items-center">
-                  <div class="w-8 h-8 md:w-10 md:h-10 bg-brand-100 rounded-full flex items-center justify-center flex-shrink-0">
-                    <span class="text-brand-600 font-bold text-xs md:text-sm">SH</span>
-                  </div>
-                  <div class="ml-2 md:ml-3 min-w-0">
-                    <p class="font-semibold text-slate-800 text-sm md:text-base">Sammy Hale</p>
-                    <p class="text-xs md:text-sm text-slate-600">Verified Member</p>
+                  <p class="testimonial-text">"I have been a network marketer since 1969 and I have never seen a more lucrative and generous pay plan. Simple design, but oh so powerful."</p>
+                  <div class="author">
+                    <div class="avatar">SH</div>
+                    <div class="author-info">
+                      <div class="name">Sammy Hale</div>
+                      <div class="verified">Verified Member</div>
+                    </div>
                   </div>
                 </div>
-              </div>
-              
-              <!-- Testimonial 2 -->
-              <div class="bg-white rounded-xl p-4 md:p-6 shadow-lg hover:shadow-xl transition-shadow w-full">
-                <div class="flex items-center mb-3 md:mb-4">
-                  <div class="flex text-yellow-400 text-sm md:text-base">
-                    ★★★★★
+                
+                <!-- Testimonial 2 -->
+                <div class="testimonial-card">
+                  <div class="rating">
+                    <span class="stars">★★★★★</span>
+                    <span class="score">5/5</span>
                   </div>
-                  <span class="ml-2 text-xs md:text-sm text-slate-600">5/5</span>
-                </div>
-                <p class="text-slate-700 mb-3 md:mb-4 text-sm md:text-base leading-relaxed">"Became a member of this club in January 2025 and can honestly recommend it to everyone. Best hotels/resorts prices, best car rental deals."</p>
-                <div class="flex items-center">
-                  <div class="w-8 h-8 md:w-10 md:h-10 bg-brand-100 rounded-full flex items-center justify-center flex-shrink-0">
-                    <span class="text-brand-600 font-bold text-xs md:text-sm">BF</span>
-                  </div>
-                  <div class="ml-2 md:ml-3 min-w-0">
-                    <p class="font-semibold text-slate-800 text-sm md:text-base">Beata F.</p>
-                    <p class="text-xs md:text-sm text-slate-600">Verified Member</p>
+                  <p class="testimonial-text">"Became a member of this club in January 2025 and can honestly recommend it to everyone. Best hotels/resorts prices, best car rental deals."</p>
+                  <div class="author">
+                    <div class="avatar">BF</div>
+                    <div class="author-info">
+                      <div class="name">Beata F.</div>
+                      <div class="verified">Verified Member</div>
+                    </div>
                   </div>
                 </div>
-              </div>
-              
-              <!-- Testimonial 3 -->
-              <div class="bg-white rounded-xl p-4 md:p-6 shadow-lg hover:shadow-xl transition-shadow w-full">
-                <div class="flex items-center mb-3 md:mb-4">
-                  <div class="flex text-yellow-400 text-sm md:text-base">
-                    ★★★★★
+                
+                <!-- Testimonial 3 -->
+                <div class="testimonial-card">
+                  <div class="rating">
+                    <span class="stars">★★★★★</span>
+                    <span class="score">5/5</span>
                   </div>
-                  <span class="ml-2 text-xs md:text-sm text-slate-600">5/5</span>
-                </div>
-                <p class="text-slate-700 mb-3 md:mb-4 text-sm md:text-base leading-relaxed">"I think the Company is revolutionizing the world of travel and the way we work with travel. I've never seen anything like that before."</p>
-                <div class="flex items-center">
-                  <div class="w-8 h-8 md:w-10 md:h-10 bg-brand-100 rounded-full flex items-center justify-center flex-shrink-0">
-                    <span class="text-brand-600 font-bold text-xs md:text-sm">MM</span>
-                  </div>
-                  <div class="ml-2 md:ml-3 min-w-0">
-                    <p class="font-semibold text-slate-800 text-sm md:text-base">Marco Mastrilli</p>
-                    <p class="text-xs md:text-sm text-slate-600">Verified Member</p>
+                  <p class="testimonial-text">"I think the Company is revolutionizing the world of travel and the way we work with travel. I've never seen anything like that before."</p>
+                  <div class="author">
+                    <div class="avatar">MM</div>
+                    <div class="author-info">
+                      <div class="name">Marco Mastrilli</div>
+                      <div class="verified">Verified Member</div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <!-- Slide 2: Testimonials 4-6 -->
-          <div class="testimonial-slide min-w-full flex-shrink-0 p-2 md:p-4 flex items-center justify-center">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6 w-full max-w-4xl px-4">
-              <!-- Testimonial 4 -->
-              <div class="bg-white rounded-xl p-4 md:p-6 shadow-lg hover:shadow-xl transition-shadow w-full">
-                <div class="flex items-center mb-3 md:mb-4">
-                  <div class="flex text-yellow-400 text-sm md:text-base">
-                    ★★★★★
+            <!-- Desktop: Slide 2 (Testimonials 4-6) / Mobile: Individual slides -->
+            <div class="slide desktop-slide-2">
+              <div class="testimonials-grid">
+                <!-- Testimonial 4 -->
+                <div class="testimonial-card">
+                  <div class="rating">
+                    <span class="stars">★★★★★</span>
+                    <span class="score">5/5</span>
                   </div>
-                  <span class="ml-2 text-xs md:text-sm text-slate-600">5/5</span>
+                  <p class="testimonial-text">"My husband and I booked a trip to Costa Rica and saved $300+ on the hotel for a 7 night stay! Then we saved $20 on our flight with Loyalty points!"</p>
+                  <div class="author">
+                    <div class="avatar">DE</div>
+                    <div class="author-info">
+                      <div class="name">Denise</div>
+                      <div class="verified">Verified Member</div>
+                    </div>
+                  </div>
                 </div>
-                <p class="text-slate-700 mb-3 md:mb-4 text-sm md:text-base leading-relaxed">"My husband and I booked a trip to Costa Rica and saved $300+ on the hotel for a 7 night stay! Then we saved $20 on our flight with Loyalty points!"</p>
-                <div class="flex items-center">
-                  <div class="w-8 h-8 md:w-10 md:h-10 bg-brand-100 rounded-full flex items-center justify-center flex-shrink-0">
-                    <span class="text-brand-600 font-bold text-xs md:text-sm">DE</span>
+                
+                <!-- Testimonial 5 -->
+                <div class="testimonial-card">
+                  <div class="rating">
+                    <span class="stars">★★★★★</span>
+                    <span class="score">5/5</span>
                   </div>
-                  <div class="ml-2 md:ml-3 min-w-0">
-                    <p class="font-semibold text-slate-800 text-sm md:text-base">Denise</p>
-                    <p class="text-xs md:text-sm text-slate-600">Verified Member</p>
+                  <p class="testimonial-text">"I shopped all sites online for a simple overnight stay at Holiday Inn Express. I was able to book very easily and saved $51 cheaper than anywhere online."</p>
+                  <div class="author">
+                    <div class="avatar">CA</div>
+                    <div class="author-info">
+                      <div class="name">Christy A.</div>
+                      <div class="verified">Verified Member</div>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Testimonial 6 -->
+                <div class="testimonial-card">
+                  <div class="rating">
+                    <span class="stars">★★★★★</span>
+                    <span class="score">5/5</span>
+                  </div>
+                  <p class="testimonial-text">"Amazing! A serious company with wonderful discounts and a very professional community of entrepreneurs and day-to-day support."</p>
+                  <div class="author">
+                    <div class="avatar">NF</div>
+                    <div class="author-info">
+                      <div class="name">Natural Formula</div>
+                      <div class="verified">Verified Member</div>
+                    </div>
                   </div>
                 </div>
               </div>
-              
-              <!-- Testimonial 5 -->
-              <div class="bg-white rounded-xl p-4 md:p-6 shadow-lg hover:shadow-xl transition-shadow w-full">
-                <div class="flex items-center mb-3 md:mb-4">
-                  <div class="flex text-yellow-400 text-sm md:text-base">
-                    ★★★★★
+            </div>
+
+            <!-- Mobile: Individual testimonial slides -->
+            <div class="slide mobile-slide">
+              <div class="testimonials-grid">
+                <div class="testimonial-card">
+                  <div class="rating">
+                    <span class="stars">★★★★★</span>
+                    <span class="score">5/5</span>
                   </div>
-                  <span class="ml-2 text-xs md:text-sm text-slate-600">5/5</span>
-                </div>
-                <p class="text-slate-700 mb-3 md:mb-4 text-sm md:text-base leading-relaxed">"I shopped all sites online for a simple overnight stay at Holiday Inn Express. I was able to book very easily and saved $51 cheaper than anywhere online."</p>
-                <div class="flex items-center">
-                  <div class="w-8 h-8 md:w-10 md:h-10 bg-brand-100 rounded-full flex items-center justify-center flex-shrink-0">
-                    <span class="text-brand-600 font-bold text-xs md:text-sm">CA</span>
-                  </div>
-                  <div class="ml-2 md:ml-3 min-w-0">
-                    <p class="font-semibold text-slate-800 text-sm md:text-base">Christy A.</p>
-                    <p class="text-xs md:text-sm text-slate-600">Verified Member</p>
+                  <p class="testimonial-text">"I have been a network marketer since 1969 and I have never seen a more lucrative and generous pay plan. Simple design, but oh so powerful."</p>
+                  <div class="author">
+                    <div class="avatar">SH</div>
+                    <div class="author-info">
+                      <div class="name">Sammy Hale</div>
+                      <div class="verified">Verified Member</div>
+                    </div>
                   </div>
                 </div>
               </div>
-              
-              <!-- Testimonial 6 -->
-              <div class="bg-white rounded-xl p-4 md:p-6 shadow-lg hover:shadow-xl transition-shadow w-full">
-                <div class="flex items-center mb-3 md:mb-4">
-                  <div class="flex text-yellow-400 text-sm md:text-base">
-                    ★★★★★
+            </div>
+
+            <div class="slide mobile-slide">
+              <div class="testimonials-grid">
+                <div class="testimonial-card">
+                  <div class="rating">
+                    <span class="stars">★★★★★</span>
+                    <span class="score">5/5</span>
                   </div>
-                  <span class="ml-2 text-xs md:text-sm text-slate-600">5/5</span>
+                  <p class="testimonial-text">"Became a member of this club in January 2025 and can honestly recommend it to everyone. Best hotels/resorts prices, best car rental deals."</p>
+                  <div class="author">
+                    <div class="avatar">BF</div>
+                    <div class="author-info">
+                      <div class="name">Beata F.</div>
+                      <div class="verified">Verified Member</div>
+                    </div>
+                  </div>
                 </div>
-                <p class="text-slate-700 mb-3 md:mb-4 text-sm md:text-base leading-relaxed">"Amazing! A serious company with wonderful discounts and a very professional community of entrepreneurs and day-to-day support."</p>
-                <div class="flex items-center">
-                  <div class="w-8 h-8 md:w-10 md:h-10 bg-brand-100 rounded-full flex items-center justify-center flex-shrink-0">
-                    <span class="text-brand-600 font-bold text-xs md:text-sm">NF</span>
+              </div>
+            </div>
+
+            <div class="slide mobile-slide">
+              <div class="testimonials-grid">
+                <div class="testimonial-card">
+                  <div class="rating">
+                    <span class="stars">★★★★★</span>
+                    <span class="score">5/5</span>
                   </div>
-                  <div class="ml-2 md:ml-3 min-w-0">
-                    <p class="font-semibold text-slate-800 text-sm md:text-base">Natural Formula</p>
-                    <p class="text-xs md:text-sm text-slate-600">Verified Member</p>
+                  <p class="testimonial-text">"I think the Company is revolutionizing the world of travel and the way we work with travel. I've never seen anything like that before."</p>
+                  <div class="author">
+                    <div class="avatar">MM</div>
+                    <div class="author-info">
+                      <div class="name">Marco Mastrilli</div>
+                      <div class="verified">Verified Member</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="slide mobile-slide">
+              <div class="testimonials-grid">
+                <div class="testimonial-card">
+                  <div class="rating">
+                    <span class="stars">★★★★★</span>
+                    <span class="score">5/5</span>
+                  </div>
+                  <p class="testimonial-text">"My husband and I booked a trip to Costa Rica and saved $300+ on the hotel for a 7 night stay! Then we saved $20 on our flight with Loyalty points!"</p>
+                  <div class="author">
+                    <div class="avatar">DE</div>
+                    <div class="author-info">
+                      <div class="name">Denise</div>
+                      <div class="verified">Verified Member</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="slide mobile-slide">
+              <div class="testimonials-grid">
+                <div class="testimonial-card">
+                  <div class="rating">
+                    <span class="stars">★★★★★</span>
+                    <span class="score">5/5</span>
+                  </div>
+                  <p class="testimonial-text">"I shopped all sites online for a simple overnight stay at Holiday Inn Express. I was able to book very easily and saved $51 cheaper than anywhere online."</p>
+                  <div class="author">
+                    <div class="avatar">CA</div>
+                    <div class="author-info">
+                      <div class="name">Christy A.</div>
+                      <div class="verified">Verified Member</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="slide mobile-slide">
+              <div class="testimonials-grid">
+                <div class="testimonial-card">
+                  <div class="rating">
+                    <span class="stars">★★★★★</span>
+                    <span class="score">5/5</span>
+                  </div>
+                  <p class="testimonial-text">"Amazing! A serious company with wonderful discounts and a very professional community of entrepreneurs and day-to-day support."</p>
+                  <div class="author">
+                    <div class="avatar">NF</div>
+                    <div class="author-info">
+                      <div class="name">Natural Formula</div>
+                      <div class="verified">Verified Member</div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -597,9 +756,18 @@
         </div>
 
         <!-- Navigation Dots -->
-        <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-3">
-          <button class="dot w-4 h-4 rounded-full bg-brand-500 active" data-slide="0"></button>
-          <button class="dot w-4 h-4 rounded-full bg-slate-300" data-slide="1"></button>
+        <div class="slider-dots">
+          <!-- Desktop: 2 dots -->
+          <button class="dot desktop-dot active" data-slide="0"></button>
+          <button class="dot desktop-dot" data-slide="1"></button>
+          
+          <!-- Mobile: 6 dots -->
+          <button class="dot mobile-dot active" data-slide="0"></button>
+          <button class="dot mobile-dot" data-slide="1"></button>
+          <button class="dot mobile-dot" data-slide="2"></button>
+          <button class="dot mobile-dot" data-slide="3"></button>
+          <button class="dot mobile-dot" data-slide="4"></button>
+          <button class="dot mobile-dot" data-slide="5"></button>
         </div>
       </div>
       
@@ -817,28 +985,43 @@
     // Check if popup was already shown in this session
     const popupShown = sessionStorage.getItem('popupShown');
     
-    // Show popup after 60 seconds if not already shown
-    if (!popupShown) {
+    // Only show automatic popup on desktop (not mobile)
+    const isMobile = window.innerWidth <= 768;
+    
+    // Show popup after 60 seconds if not already shown (desktop only)
+    if (!popupShown && !isMobile) {
       setTimeout(() => {
         showPopup();
       }, 60000);
     }
     
-    // Exit intent detection
+    // Exit intent detection (desktop only)
     let exitIntentShown = false;
-    document.addEventListener('mouseleave', (e) => {
-      if (e.clientY <= 0 && !exitIntentShown && !popupShown) {
-        showPopup();
-        exitIntentShown = true;
-      }
-    });
+    if (!isMobile) {
+      document.addEventListener('mouseleave', (e) => {
+        if (e.clientY <= 0 && !exitIntentShown && !popupShown) {
+          showPopup();
+          exitIntentShown = true;
+        }
+      });
+    }
     
     // Show popup function
     function showPopup() {
-      popupModal.classList.remove('hidden');
-      popupModal.classList.add('flex');
-      sessionStorage.setItem('popupShown', 'true');
+      // Only show popup on desktop
+      if (window.innerWidth > 768) {
+        popupModal.classList.remove('hidden');
+        popupModal.classList.add('flex');
+        sessionStorage.setItem('popupShown', 'true');
+      }
     }
+    
+    // Handle window resize - hide popup if switching to mobile
+    window.addEventListener('resize', () => {
+      if (window.innerWidth <= 768 && !popupModal.classList.contains('hidden')) {
+        closePopup();
+      }
+    });
     
     // Close popup function
     function closePopup() {
@@ -975,14 +1158,16 @@
     // Optimized Testimonial Slider Logic
     let currentSlide = 0;
     const sliderContainer = document.getElementById('sliderContainer');
-    const dots = document.querySelectorAll('.dot');
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
-    const slides = document.querySelectorAll('.testimonial-slide');
-    const totalSlides = slides.length;
     let autoSlideInterval;
     let isTransitioning = false;
     let rafId = null;
+
+    function getTotalSlides() {
+      const isMobile = window.innerWidth <= 768;
+      return isMobile ? 6 : 2; // 6 individual slides on mobile, 2 slides on desktop
+    }
 
     // Modern responsive slider update function
     function updateSlider() {
@@ -995,22 +1180,20 @@
       }
 
       rafId = requestAnimationFrame(() => {
-        const translateX = -currentSlide * 100;
-        sliderContainer.style.transform = `translate3d(${translateX}%, 0, 0)`;
+        const isMobile = window.innerWidth <= 768;
+        const totalSlides = getTotalSlides();
+        
+        // Calculate translateX based on screen size
+        const translateX = isMobile ? -currentSlide * 16.666 : -currentSlide * 50; // 16.666% per slide on mobile, 50% on desktop
+        sliderContainer.style.transform = `translateX(${translateX}%)`;
 
-        // Update dots
+        // Update dots based on screen size
+        const dots = document.querySelectorAll(isMobile ? '.mobile-dot' : '.desktop-dot');
         dots.forEach((dot, i) => {
-          const isActive = i === currentSlide;
-          dot.classList.toggle('active', isActive);
-          dot.classList.toggle('bg-brand-500', isActive);
-          dot.classList.toggle('bg-slate-300', !isActive);
+          dot.classList.toggle('active', i === currentSlide);
         });
 
-        // Enhanced debugging with mobile/desktop detection
-        const isMobile = window.innerWidth <= 768;
-        console.log(`Slider Update - Current: ${currentSlide}, Total: ${totalSlides}, TranslateX: ${translateX}%`);
-        console.log(`Screen width: ${window.innerWidth}px, Mobile: ${isMobile}`);
-        console.log(`Mobile layout: Single card per slide, Desktop: 3 cards per slide`);
+        console.log(`Slide: ${currentSlide + 1}/${totalSlides} (${isMobile ? 'Mobile' : 'Desktop'})`);
 
         // Use shorter transition time for better performance
         setTimeout(() => {
@@ -1021,6 +1204,7 @@
 
     function nextSlide() {
       if (isTransitioning) return;
+      const totalSlides = getTotalSlides();
       console.log(`Next slide clicked. Current: ${currentSlide}, Total: ${totalSlides}`);
       currentSlide = (currentSlide + 1) % totalSlides;
       console.log(`New slide: ${currentSlide}`);
@@ -1030,6 +1214,7 @@
 
     function prevSlide() {
       if (isTransitioning) return;
+      const totalSlides = getTotalSlides();
       console.log(`Prev slide clicked. Current: ${currentSlide}, Total: ${totalSlides}`);
       currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
       console.log(`New slide: ${currentSlide}`);
@@ -1039,6 +1224,8 @@
 
     function goToSlide(index) {
       if (isTransitioning || index === currentSlide) return;
+      const totalSlides = getTotalSlides();
+      if (index >= totalSlides) return; // Prevent going beyond available slides
       console.log(`Go to slide clicked. Index: ${index}, Current: ${currentSlide}`);
       currentSlide = index;
       updateSlider();
@@ -1061,15 +1248,16 @@
 
     // Initialize slider
     function initSlider() {
-      if (!sliderContainer || totalSlides === 0) {
-        console.warn('Slider elements not found, skipping initialization.');
+      if (!sliderContainer) {
+        console.warn('Slider container not found, skipping initialization.');
         return;
       }
       
       console.log('Initializing slider...');
-      console.log('Total slides found:', totalSlides);
-      console.log('Slider container:', sliderContainer);
-      console.log('Dots found:', dots.length);
+      const totalSlides = getTotalSlides();
+      const isMobile = window.innerWidth <= 768;
+      console.log(`Layout: ${isMobile ? 'Mobile (6 individual slides)' : 'Desktop (2 slides with 3 cards each)'}`);
+      console.log(`Total slides: ${totalSlides}`);
       
       updateSlider();
       startAutoSlide();
@@ -1111,8 +1299,10 @@
       });
     }
 
-    dots.forEach((dot, index) => {
+    // Add event listeners for dots (both mobile and desktop)
+    document.querySelectorAll('.dot').forEach((dot) => {
       dot.addEventListener('click', () => {
+        const index = parseInt(dot.getAttribute('data-slide'));
         goToSlide(index);
       });
     });
