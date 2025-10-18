@@ -1,0 +1,26 @@
+{
+  "name": "travel-lifestyle-funnel",
+  "version": "1.0.0",
+  "description": "Travel lifestyle funnel landing page",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx live-server --port=3000 --open=/",
+    "start": "npx live-server --port=3000 --open=/",
+    "build": "echo 'Static site - no build needed'",
+    "serve": "npx live-server --port=8080 --open=/"
+  },
+  "keywords": [
+    "travel",
+    "lifestyle",
+    "funnel",
+    "landing-page"
+  ],
+  "author": "D&J Tech Gals LLC",
+  "license": "MIT",
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.75.1"
+  }
+}

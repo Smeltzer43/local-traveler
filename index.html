@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Global Travel & Lifestyle Club — Freedom • Savings • Luxury</title>
+  <meta name="description" content="Join a modern travel & lifestyle club that provides wholesale trip pricing, mentorship, and flexible income streams." />
+  <meta property="og:title" content="Global Travel & Lifestyle Club — Freedom • Savings • Luxury" />
+  <meta property="og:description" content="Wholesale travel, community, and a roadmap to create location‑flexible income." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#0fb9b1" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Playfair Display', 'serif'],
+            body: ['Libre Baskerville', 'serif']
+          },
+          colors: {
+            brand: {
+              50: '#e6fffb', 100: '#c8fff6', 200: '#96f2ea', 300: '#5ee9de', 400: '#2ed3c6',
+              500: '#0fb9b1', 600: '#0aa39c', 700: '#0a8a84', 800: '#0b6f6b', 900: '#0b5856'
+            },
+            peach: {
+              50: '#fff1f0', 100: '#ffe3e0', 200: '#ffcfc8', 300: '#ffb6a9', 400: '#ff9a8b',
+              500: '#ff816f', 600: '#f46b5d', 700: '#de594d', 800: '#c74a40', 900: '#a93a31'
+            },
+            'warm-teal': '#0fb9b1',
+            'pinky-peach': '#ff9a8b'
+          },
+          boxShadow: { soft: '0 10px 30px rgba(2,132,199,.18)'}
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Smooth scroll for anchor links */
+    html { scroll-behavior: smooth; }
+    /* Better text rendering */
+    body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    /* Soft lighting vibe */
+    .soft-glow { box-shadow: 0 10px 30px rgba(15,185,177,.18), 0 4px 14px rgba(255,154,139,.15); }
+    
+    /* Editorial highlight classes */
+    .highlight { color: #ff9a8b; text-shadow: 2px 2px 4px rgba(0,0,0,0.8); }
+    .highlight-alt { color: #0fb9b1; text-shadow: 2px 2px 4px rgba(0,0,0,0.8); }
+    .peach-teal-gradient { background-image: linear-gradient(135deg, rgba(255,154,139,.55), rgba(15,185,177,.55)); }
+    /* Utility to nudge elements down visually (approx 20%) */
+    .shift-down-20 { 
+      transform: translateY(20%); 
+      transition: transform 240ms ease; 
+    }
+    
+    /* Modern Testimonial Slider Styles */
+    .testimonial-slider {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      border-radius: 1rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+    
+    .slider-container {
+      display: flex;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      will-change: transform;
+    }
+    
+    .testimonial-slide {
+      min-width: 100%;
+      flex-shrink: 0;
+      padding: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .dot {
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 2px solid transparent;
+    }
+    
+    .dot:hover {
+      transform: scale(1.3);
+      background-color: #0fb9b1 !important;
+    }
+    
+    .dot.active {
+      background-color: #0fb9b1 !important;
+      transform: scale(1.2);
+    }
+    
+    /* Navigation Button Styles */
+    .nav-btn {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      backdrop-filter: blur(10px);
+    }
+    
+    .nav-btn:hover {
+      transform: translateY(-50%) scale(1.1);
+      background-color: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+    
+    .nav-btn:active {
+      transform: translateY(-50%) scale(0.95);
+    }
+    
+    /* Slide Animation */
+    .slide-enter {
+      animation: slideIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    /* Progress Bar */
+    .progress-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #0fb9b1, #ff9a8b);
+      transition: width 0.3s ease;
+      border-radius: 0 0 1rem 1rem;
+    }
+  /* Modern Testimonial Slider Styles */
+  .testimonial-slider {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 1rem;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  }
+
+  .slider-container {
+    display: flex;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+  }
+
+  .testimonial-slide {
+    min-width: 100%;
+    flex-shrink: 0;
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .dot {
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 2px solid transparent;
+  }
+
+  .dot:hover {
+    transform: scale(1.3);
+    background-color: #0fb9b1 !important;
+  }
+
+  .dot.active {
+    background-color: #0fb9b1 !important;
+    transform: scale(1.2);
+  }
+
+  /* Navigation Button Styles */
+  .nav-btn {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(10px);
+  }
+
+  .nav-btn:hover {
+    transform: translateY(-50%) scale(1.1);
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  }
+
+  .nav-btn:active {
+    transform: translateY(-50%) scale(0.95);
+  }
+
+  /* Slide Animation */
+  .slide-enter {
+    animation: slideIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateX(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    }
+  </style>
+</head>
+<body class="font-body text-slate-800 bg-white">
+  <!-- Top Bar / Trust -->
+  <div class="w-full bg-warm-teal text-white text-center text-sm py-2">
+    <p class="px-3">Over 500,000 members worldwide • Avg. 4.8/5 rating • Wholesale travel perks</p>
+  </div>
+
+  <!-- Header -->
+  <header class="sticky top-0 z-40 backdrop-blur bg-white/80 border-b border-slate-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+      <a href="#" class="flex items-center gap-2 font-semibold tracking-tight">
+        <span class="inline-flex h-9 w-9 items-center justify-center rounded-full bg-brand-100 text-brand-700">LT</span>
+        <span class="sr-only">The Local Travelers</span>
+        <span aria-hidden="true">The Local Travelers</span>
+      </a>
+      <nav class="hidden md:flex items-center gap-6 text-sm">
+        <a href="#benefits" class="hover:text-brand-700">Benefits</a>
+        <a href="#story" class="hover:text-brand-700">Our Story</a>
+        <a href="#how" class="hover:text-brand-700">How It Works</a>
+        <a href="#faq" class="hover:text-brand-700">FAQ</a>
+      </nav>
+      <button id="heroWatchBtn" class="inline-flex items-center rounded-xl bg-brand-600 text-white px-4 py-2 text-sm font-semibold soft-glow hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500">Watch the Overview</button>
+    </div>
+  </header>
+
+    <!-- Hero -->
+  <section class="relative overflow-hidden">
+    <div class="absolute inset-0 -z-10">
+      <img src="assets/Hero.png" alt="Ocean sunrise with airplane wing—freedom to travel" class="h-full w-full object-cover"/>
+      <div class="absolute inset-0 bg-gradient-to-b from-peach-200/60 via-black/20 to-white"></div>
+      <div class="absolute inset-0 peach-teal-gradient mix-blend-soft-light"></div>
+    </div>
+    </div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28">
+      <div class="text-center">
+        <h1 class="font-display text-7xl md:text-10xl font-bold leading-tight text-white" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">
+          A Lifestyle of <span class="highlight">Freedom</span>, <span class="highlight-alt">Travel</span>, and <span class="highlight">Income</span> that Builds <span class="highlight-alt">Legacies</span>
+        </h1>
+        <p class="mt-6 text-2xl text-white font-bold max-w-6xl mx-auto">A faith-centered global lifestyle movement for people ready to live freely, travel often, and create abundance while staying rooted in purpose.</p>
+        <p class="mt-4 text-xl text-white font-bold max-w-4xl mx-auto">You'll get insider pricing, <span class="highlight-alt">residual income</span>, and a lifestyle that fuels your dreams instead of draining them.</p>
+        <div class="mt-8 flex justify-center">
+          <button id="heroMainBtn" class="inline-flex items-center rounded-xl bg-brand-600 text-white px-8 py-4 text-lg font-semibold soft-glow hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500 transition-all duration-300 hover:scale-105">
+             Begin Your Travel & Income Opportunity
+          </button>
+        </div>
+      </div>
+    </div>
+    </section>
+
+  <!-- Circular Image Section -->
+  <section class="py-16 bg-warm-teal">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row items-start gap-8">
+        <div class="text-center md:text-right mb-12 flex-1">
+          <h3 class="font-display text-6xl font-bold mb-20 text-white">A <span class="highlight">Smarter</span> Way to <span class="highlight">Travel</span></h3>
+            <div class="text-white text-center">
+              <p class="text-2xl mb-6 text-white font-bold">Join a <span class="highlight">global community</span> of travelers who enjoy faith, family, and freedom through experiences that restore balance and expand possibilities.</p>
+              <p class="text-2xl text-white font-bold">Discover how thousands are now <span class="highlight">saving more, earning more, and living with greater intention</span>—one unforgettable trip at a time.</p>
+          </div>
+        </div>
+        <div class="flex-shrink-0 flex items-center flex-col">
+          <img src="assets/couple_5496.jpg" alt="Member headshot" class="h-96 w-96 rounded-full ring-2 ring-white object-cover">
+          <p class="text-2xl text-white font-bold mt-4" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">Chad & Christina Smeltzer</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits / Features Grid -->
+  <section id="benefits" class="py-16 md:py-24 bg-peach-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-2xl">
+        <h3 class="text-6xl font-display font-bold text-white mb-8" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">The Overview</h3>
+        <p class="text-2xl mb-6 text-slate-600">See how members use our app and trip planner to save on travel and how we get paid daily, weekly, and residually, all without inventory, quotas, or product autoship.</p>
+          </div>
+        </div>
+        
+      <div class="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Card 1 -->
+        <article class="bg-white rounded-2xl shadow-lg ring-1 ring-slate-100 p-6 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:-translate-y-2" style="box-shadow: 0 10px 25px rgba(0,0,0,0.15), 0 4px 10px rgba(0,0,0,0.1);">
+          <img src="assets/resort_pool.png" class="rounded-xl w-full h-80 object-cover" alt="Resort pool at sunset" />
+          <h3 class="mt-4 text-xl font-semibold">Insider Trip Pricing</h3>
+          <p class="text-2xl mb-6 text-slate-600">Direct vendor relationships mean better pricing and perks across 200+ destinations! There is no need for a middleman!</p>
+        </article>
+        <!-- Card 2 -->
+        <article class="bg-white rounded-2xl shadow-lg ring-1 ring-slate-100 p-6 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:-translate-y-2" style="box-shadow: 0 10px 25px rgba(0,0,0,0.15), 0 4px 10px rgba(0,0,0,0.1);">
+          <img src="assets/Aerial-beach-cove.png" class="rounded-xl w-full h-80 object-cover" alt="Aerial beach cove" />
+          <h3 class="mt-4 text-xl font-semibold">Member Loyalty Perks</h3>
+          <p class="text-2xl mb-6 text-slate-600">Earn loyalty points monthly that add up to a trip for two every year, plus travel credits on every booking.</p>
+        </article>
+        <!-- Card 3 -->
+        <article class="bg-white rounded-2xl shadow-lg ring-1 ring-slate-100 p-6 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:-translate-y-2" style="box-shadow: 0 10px 25px rgba(0,0,0,0.15), 0 4px 10px rgba(0,0,0,0.1);">
+          <img src="assets/laptop-lifestyle.png" class="rounded-xl w-full h-80 object-cover" style="object-position: center 10%;" alt="Phone with payout notification" />
+          <h3 class="mt-4 text-xl font-semibold">Nine Ways to Earn</h3>
+          <p class="text-2xl mb-6 text-slate-600">Daily and weekly pay, bonuses, and three kinds of residuals with up to 85% paid to you!.</p>
+        </article>
+        <!-- Card 4 -->
+        <article class="bg-white rounded-2xl shadow-lg ring-1 ring-slate-100 p-6 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:-translate-y-2" style="box-shadow: 0 10px 25px rgba(0,0,0,0.15), 0 4px 10px rgba(0,0,0,0.1);">
+  <img src="assets/support.png" class="rounded-xl w-full h-80 object-cover" style="object-position: center 30%;" alt="Laptop with dashboard" />
+          <h3 class="mt-4 text-xl font-semibold">Proprietary Tech & Support</h3>
+          <p class="text-2xl mb-6 text-slate-600">Our own app, an easy to usetrip planner, and 24/7 in‑house support in 10+ languages keep things simple.</p>
+        </article>
+        <!-- Card 5 -->
+        <article class="bg-white rounded-2xl shadow-lg ring-1 ring-slate-100 p-6 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:-translate-y-2" style="box-shadow: 0 10px 25px rgba(0,0,0,0.15), 0 4px 10px rgba(0,0,0,0.1);">
+          <img src="assets/points.png" class="rounded-xl w-full h-80 object-cover" alt="Skyline with sunrise" />
+          <h3 class="mt-4 text-xl font-semibold">Points Never Expire</h3>
+          <p class="text-2xl mb-6 text-slate-600">Every point you earn carries over, which means your effort compounds instead of disappearing at month's end.</p>
+        </article>
+        <!-- Card 6 -->
+        <article class="bg-white rounded-2xl shadow-lg ring-1 ring-slate-100 p-6 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:-translate-y-2" style="box-shadow: 0 10px 25px rgba(0,0,0,0.15), 0 4px 10px rgba(0,0,0,0.1);">
+          <img src="assets/IMG_5052.PNG" class="rounded-xl w-full h-80 object-cover" alt="Group celebrating on a rooftop" />
+          <h3 class="mt-4 text-xl font-semibold">Faith‑Based Community</h3>
+          <p class="text-2xl mb-6 text-slate-600">We travel, build, and serve together! Bring your whole self and grow with mentors, peers, and friends.</p>
+        </article>
+          </div>
+        </div>
+        
+        <!-- CTA Button Section -->
+        <div class="mt-12 text-center">
+          <button id="showPopupBtn" class="inline-flex items-center rounded-xl bg-brand-600 text-white px-8 py-4 text-lg font-semibold soft-glow hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500 transition-all duration-300 hover:scale-105">
+            See How Members Save & Earn
+          </button>
+          <p class="mt-3 text-lg text-slate-600">See how thousands are creating freedom through travel and income</p>
+        </div>
+  </section>
+
+  <!-- Founder Story -->
+  <section id="story" class="py-8 md:py-12">
+    <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-10 items-center">
+      <div class="order-1 lg:order-1">
+        <h3 class="font-display text-6xl font-bold mb-20 text-white" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8);"><span class="highlight">Why We Chose This Path</span></h3>
+        <p class="text-2xl mb-6 text-slate-600">We're parents and former 9‑to‑5ers who wanted more time freedom and more stamps on our passports. When we found a simple model with travel perks plus a powerful compensation plan,we went all in. In our first month, momentum took off and it hasn't slowed.</p>
+        <p class="text-2xl mb-6 text-slate-600">Today we're part of a faith‑forward community helping everyday people travel better and build income with guidance that actually meets them where they are, especially as North America continues its launch phase.</p>
+      </div>
+      <figure class="order-2 lg:order-2 relative">
+        <img src="assets/family.png" alt="Founders smiling on a coastal overlook" class="w-full rounded-2xl object-cover" style="height: 530px; border-radius: 2rem; overflow: hidden;">
+        <figcaption class="sr-only">Members of the travel & lifestyle club</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- How It Works / Roadmap -->
+  <section id="how" class="py-12 md:py-16 bg-warm-teal">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-2xl">
+        <h3 class="font-display text-6xl font-bold mb-8 text-white" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">The Overview</h3>
+        <p class="text-2xl mb-6 text-white font-bold">Watch a short presentation showing how members travel for less and create income without complex tech, monthly sales quotas, or inventory risk.</p>
+          </div>
+
+      <div class="mt-6 grid lg:grid-cols-3 gap-6">
+        <div class="bg-white/10 backdrop-blur rounded-2xl p-6 ring-1 ring-white/20">
+           <h3 class="font-display text-4xl font-bold mb-6 text-white" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8);"><span class="highlight">1)</span> <span class="highlight">Get Access</span></h3>
+          <p class="text-2xl mb-6 text-white font-bold">Enter your best email to access the short video walkthrough and gain access to starter resources.</p>
+        </div>
+        <div class="bg-white/10 backdrop-blur rounded-2xl p-6 ring-1 ring-white/20">
+           <h3 class="font-display text-4xl font-bold mb-6 text-white" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8);"><span class="highlight">2)</span> <span class="highlight">Pick</span> <span class="highlight">Membership</span></h3>
+          <p class="text-2xl mb-6 text-white font-bold">Elite: $120/mo and get $120 back monthly in loyalty points. Optional Turbo: one‑time $249 to double your monthly points. Both qualify you to begin earning to your full potential!</p>
+        </div>
+        <div class="bg-white/10 backdrop-blur rounded-2xl p-6 ring-1 ring-white/20">
+           <h3 class="font-display text-4xl font-bold mb-6 text-white" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8);"><span class="highlight">3)</span> <span class="highlight">Refer 3 & Launch</span></h3>
+          <p class="text-2xl mb-6 text-white font-bold">Refer 3 people and your membership is covered! Then follow our checklist, plug into weekly mentorship, and begin earning and traveling!</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  <!-- CTA / Lead Form -->
+  <section id="cta" class="py-12 md:py-16 bg-peach-50">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h3 class="font-display text-6xl font-bold mb-8 text-white" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8);"><span class="highlight">Get Instant Access</span></h3>
+      <p class="text-2xl mb-6 text-warm-teal font-bold">Drop your email below. We'll send the short video walkthrough and details on member perks.</p>
+      <div class="mt-6 flex justify-center">
+        <button id="ctaPopupBtn" class="inline-flex items-center rounded-xl bg-brand-600 text-white px-8 py-4 text-lg font-semibold soft-glow hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500 transition-all duration-300 hover:scale-105">
+          Watch the Explainer Video
+        </button>
+      </div>
+      <p class="mt-3 text-xs text-slate-500">We hate spam. Unsubscribe anytime. Earnings and savings vary; not financial advice.</p>
+
+      <!-- Video Modal Trigger -->
+      <button id="watchDemo" class="mt-6 inline-flex items-center justify-center rounded-xl ring-1 ring-slate-300 px-4 py-2 text-sm font-semibold hover:bg-slate-50">Check out Christina & Chad's story</button>
+      </div>
+  </section>
+
+  <!-- Real Trustpilot Reviews Section -->
+  <section class="py-16 bg-white-50">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h3 class="text-3xl font-bold text-slate-800 mb-4">What Our Members Say</h3>
+        <p class="text-lg text-slate-600">Real reviews from our travel community</p>
+        <div class="flex items-center justify-center mt-4">
+          <div class="flex text-yellow-400 text-2xl">
+            ★★★★★
+          </div>
+          <span class="ml-3 text-xl font-bold text-slate-800">4.8/5</span>
+          <span class="ml-2 text-slate-600">• 1,274 reviews</span>
+        </div>
+      </div>
+      
+      <div class="testimonial-slider relative overflow-hidden rounded-xl bg-white border border-slate-200 shadow-lg">
+        <!-- Navigation Arrows -->
+        <button id="prevBtn" class="nav-btn absolute left-4 top-1/2 transform -translate-y-1/2 z-10 bg-white/90 hover:bg-white rounded-full p-3 shadow-lg">
+          <svg class="w-6 h-6 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+          </svg>
+        </button>
+        <button id="nextBtn" class="nav-btn absolute right-4 top-1/2 transform -translate-y-1/2 z-10 bg-white/90 hover:bg-white rounded-full p-3 shadow-lg">
+          <svg class="w-6 h-6 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+          </svg>
+        </button>
+
+        <!-- Slider Container -->
+        <div id="sliderContainer" class="slider-container flex">
+          <!-- Slide 1: Testimonials 1-3 -->
+          <div class="testimonial-slide min-w-full flex-shrink-0 p-6 flex items-center justify-center">
+            <div class="grid md:grid-cols-3 gap-8 w-full max-w-4xl">
+              <!-- Testimonial 1 -->
+              <div class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow">
+                <div class="flex items-center mb-4">
+                  <div class="flex text-yellow-400">
+                    ★★★★★
+                  </div>
+                  <span class="ml-2 text-sm text-slate-600">5/5</span>
+                </div>
+                <p class="text-slate-700 mb-4">"I have been a network marketer since 1969 and I have never seen a more lucrative and generous pay plan. Simple design, but oh so powerful."</p>
+                <div class="flex items-center">
+                  <div class="w-10 h-10 bg-brand-100 rounded-full flex items-center justify-center">
+                    <span class="text-brand-600 font-bold">SH</span>
+                  </div>
+                  <div class="ml-3">
+                    <p class="font-semibold text-slate-800">Sammy Hale</p>
+                    <p class="text-sm text-slate-600">Verified Member</p>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Testimonial 2 -->
+              <div class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow">
+                <div class="flex items-center mb-4">
+                  <div class="flex text-yellow-400">
+                    ★★★★★
+                  </div>
+                  <span class="ml-2 text-sm text-slate-600">5/5</span>
+                </div>
+                <p class="text-slate-700 mb-4">"Became a member of this club in January 2025 and can honestly recommend it to everyone. Best hotels/resorts prices, best car rental deals."</p>
+                <div class="flex items-center">
+                  <div class="w-10 h-10 bg-brand-100 rounded-full flex items-center justify-center">
+                    <span class="text-brand-600 font-bold">BF</span>
+                  </div>
+                  <div class="ml-3">
+                    <p class="font-semibold text-slate-800">Beata F.</p>
+                    <p class="text-sm text-slate-600">Verified Member</p>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Testimonial 3 -->
+              <div class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow">
+                <div class="flex items-center mb-4">
+                  <div class="flex text-yellow-400">
+                    ★★★★★
+                  </div>
+                  <span class="ml-2 text-sm text-slate-600">5/5</span>
+                </div>
+                <p class="text-slate-700 mb-4">"I think the Company is revolutionizing the world of travel and the way we work with travel. I've never seen anything like that before."</p>
+                <div class="flex items-center">
+                  <div class="w-10 h-10 bg-brand-100 rounded-full flex items-center justify-center">
+                    <span class="text-brand-600 font-bold">MM</span>
+                  </div>
+                  <div class="ml-3">
+                    <p class="font-semibold text-slate-800">Marco Mastrilli</p>
+                    <p class="text-sm text-slate-600">Verified Member</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 2: Testimonials 4-6 -->
+          <div class="testimonial-slide min-w-full flex-shrink-0 p-6 flex items-center justify-center">
+            <div class="grid md:grid-cols-3 gap-8 w-full max-w-4xl">
+              <!-- Testimonial 4 -->
+              <div class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow">
+                <div class="flex items-center mb-4">
+                  <div class="flex text-yellow-400">
+                    ★★★★★
+                  </div>
+                  <span class="ml-2 text-sm text-slate-600">5/5</span>
+                </div>
+                <p class="text-slate-700 mb-4">"My husband and I booked a trip to Costa Rica and saved $300+ on the hotel for a 7 night stay! Then we saved $20 on our flight with Loyalty points!"</p>
+                <div class="flex items-center">
+                  <div class="w-10 h-10 bg-brand-100 rounded-full flex items-center justify-center">
+                    <span class="text-brand-600 font-bold">DE</span>
+                  </div>
+                  <div class="ml-3">
+                    <p class="font-semibold text-slate-800">Denise</p>
+                    <p class="text-sm text-slate-600">Verified Member</p>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Testimonial 5 -->
+              <div class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow">
+                <div class="flex items-center mb-4">
+                  <div class="flex text-yellow-400">
+                    ★★★★★
+                  </div>
+                  <span class="ml-2 text-sm text-slate-600">5/5</span>
+                </div>
+                <p class="text-slate-700 mb-4">"I shopped all sites online for a simple overnight stay at Holiday Inn Express. I was able to book very easily and saved $51 cheaper than anywhere online."</p>
+                <div class="flex items-center">
+                  <div class="w-10 h-10 bg-brand-100 rounded-full flex items-center justify-center">
+                    <span class="text-brand-600 font-bold">CA</span>
+                  </div>
+                  <div class="ml-3">
+                    <p class="font-semibold text-slate-800">Christy A.</p>
+                    <p class="text-sm text-slate-600">Verified Member</p>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Testimonial 6 -->
+              <div class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow">
+                <div class="flex items-center mb-4">
+                  <div class="flex text-yellow-400">
+                    ★★★★★
+                  </div>
+                  <span class="ml-2 text-sm text-slate-600">5/5</span>
+                </div>
+                <p class="text-slate-700 mb-4">"Amazing! A serious company with wonderful discounts and a very professional community of entrepreneurs and day-to-day support."</p>
+                <div class="flex items-center">
+                  <div class="w-10 h-10 bg-brand-100 rounded-full flex items-center justify-center">
+                    <span class="text-brand-600 font-bold">NF</span>
+                  </div>
+                  <div class="ml-3">
+                    <p class="font-semibold text-slate-800">Natural Formula</p>
+                    <p class="text-sm text-slate-600">Verified Member</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Navigation Dots -->
+        <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-3">
+          <button class="dot w-4 h-4 rounded-full bg-brand-500 active" data-slide="0"></button>
+          <button class="dot w-4 h-4 rounded-full bg-slate-300" data-slide="1"></button>
+        </div>
+      </div>
+      
+      <!-- Social Proof Stats -->
+      <div class="text-center mt-12">
+        <div class="bg-white rounded-xl p-8 shadow-lg max-w-2xl mx-auto">
+          <h4 class="text-2xl font-bold text-slate-800 mb-4">Join Our Growing Community</h4>
+          <div class="grid grid-cols-3 gap-6 text-center">
+            <div>
+              <div class="text-3xl font-bold text-brand-600">500K+</div>
+              <div class="text-sm text-slate-600">Active Members</div>
+            </div>
+            <div>
+              <div class="text-3xl font-bold text-brand-600">4.8★</div>
+              <div class="text-sm text-slate-600">Average Rating</div>
+            </div>
+            <div>
+              <div class="text-3xl font-bold text-brand-600">$300+</div>
+              <div class="text-sm text-slate-600">Average Savings</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </section>
+
+  <!-- Imagine / Inspiration -->
+  <section class="py-12 md:py-16 bg-gradient-to-b from-peach-50 to-white">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h3 class="font-display text-6xl font-bold mb-8 text-white" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">Imagine saying yes to more.</h3>
+      <p class="text-2xl mb-6 text-warm-teal font-bold">More time with family. More adventures on the calendar. More margin for what matters.</p>
+      <div class="mt-6 grid md:grid-cols-3 gap-6">
+        <div class="text-center">
+  <img src="assets/IMG_5042.JPG" class="rounded-2xl w-full h-56 object-cover" alt="Family at a scenic overlook" />
+          <h4 class="mt-4 text-xl font-bold text-slate-800">Done-For-You Platform</h4>
+          <p class="mt-2 text-slate-600">Complete system with app, trip planner, and 24/7 support. No tech skills required.</p>
+        </div>
+        <div class="text-center">
+  <img src="assets/IMG_5043.JPG" class="rounded-2xl w-full h-56 object-cover" alt="Friends exploring a city" />
+          <h4 class="mt-4 text-xl font-bold text-slate-800">Earn immediately</h4>
+          <p class="mt-2 text-slate-600">Start earning loyalty points immediately and book your first discounted trip within days.</p>
+        </div>
+        <div class="text-center">
+  <img src="assets/IMG_5044.JPG" class="rounded-2xl w-full h-56 object-cover" alt="Relaxing at a beach resort" />
+          <h4 class="mt-4 text-xl font-bold text-slate-800">Uncapped Earning Potential</h4>
+          <p class="mt-2 text-slate-600">Nine ways to earn with daily pay, bonuses, and three types of residuals.</p>
+        </div>
+      </div>
+      </div>
+    </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="py-12 md:py-16 bg-warm-teal">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h3 class="font-display text-6xl font-bold mb-8 text-white" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">Questions, answered.</h3>
+      <div class="mt-6 divide-y divide-slate-200" id="faqRoot">
+        <details class="group py-3" open>
+          <summary class="flex cursor-pointer list-none items-center justify-between">
+            <span class="text-lg mb-2 text-white font-bold">What type of business model is this?</span>
+            <span class="ml-4 transition group-open:rotate-180">▾</span>
+          </summary>
+          <p class="text-base mb-2 text-white font-semibold">It's a travel & lifestyle membership with an optional comp plan that pays on customer volume, not product autoship. No inventory and no monthly product orders. </p>
+        </details>
+        <details class="group py-3">
+          <summary class="flex cursor-pointer list-none items-center justify-between">
+            <span class="text-lg mb-2 text-white font-bold">Do I need prior experience? No experience required!</span>
+            <span class="ml-4 transition group-open:rotate-180">▾</span>
+          </summary>
+          <p class="text-base mb-2 text-white font-semibold">Nope. You'll have a simple app, an proprietarytrip planner, done‑for‑you funnels, and weekly mentorship. If you can share a link and follow a checklist, you can do this.</p>
+        </details>
+      </div>
+      </div>
+    </section>
+
+  <!-- Footer -->
+  <footer class="bg-slate-900 text-slate-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="grid md:grid-cols-3 gap-8">
+        <div>
+          <h3 class="text-white font-semibold">The Local Travelers</h3>
+          <p class="mt-3 text-sm">Built for freedom‑seekers ready to explore more and stress less.</p>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold">Legal</h4>
+          <ul class="mt-3 space-y-2 text-sm">
+            <li>This site is not a part of the Facebook™ website or Facebook™ Inc. Additionally, this site is NOT endorsed by Facebook™ in any way. Facebook™ is a trademark of Facebook™, Inc.</li>
+            <li>© <span id="year"></span> Your Company. All rights reserved.</li>
+      </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold">Contact</h4>
+          <p class="mt-3 text-sm">Questions? Email <a class="underline" href="mailto:hello@example.com">hello@example.com</a></p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Popup Modal -->
+  <div id="popupModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4">
+    <div class="absolute inset-0 bg-black/70" data-close></div>
+    <div class="relative bg-white max-w-2xl w-full rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between px-6 py-3 border-b border-slate-200">
+        <h3 class="text-4xl font-bold text-slate-800">This isn't some fly by night business.</h3>
+        <button class="p-2 rounded-lg hover:bg-slate-100 text-slate-600" data-close aria-label="Close">✕</button>
+      </div>
+      <div class="p-4">
+        <p class="text-base text-slate-700 mb-4">You're looking at a worldwide lifestyle network that's been delivering real results for over ten years! It's quickly gaining serious momentum across North America. It's built for people who want more options, more money coming in, and unforgettable trips and adventures.</p>
+        
+        <h4 class="text-base font-bold text-slate-800 mb-3">Here's what you'll get in this short explainer:</h4>
+        <ul class="space-y-2 mb-4">
+          <li class="flex items-start">
+            <span class="text-brand-500 mr-2 mt-1 text-sm">→</span>
+            <span class="text-sm text-slate-700">A straightforward way to earn recurring income, with no inventory, no complex tech, no pressure to hustle month after month.</span>
+          </li>
+          <li class="flex items-start">
+            <span class="text-brand-500 mr-2 mt-1 text-sm">→</span>
+            <span class="text-sm text-slate-700">Why acting now puts you ahead of the curve with a major edge.</span>
+          </li>
+          <li class="flex items-start">
+            <span class="text-brand-500 mr-2 mt-1 text-sm">→</span>
+            <span class="text-sm text-slate-700">A lifestyle membership that gives you access to world-class travel at deeply discounted, members-only rates.</span>
+          </li>
+          <li class="flex items-start">
+            <span class="text-brand-500 mr-2 mt-1 text-sm">→</span>
+            <span class="text-sm text-slate-700">How just being part of it allows you to choose a dream vacation every year, places people usually only see on screens.</span>
+          </li>
+        </ul>
+        
+        <div class="bg-brand-50 rounded-xl p-3 mb-4">
+          <h5 class="font-bold text-slate-800 mb-2 text-sm">Drop your best email below and get immediate access.</h5>
+          <form id="popupForm" class="space-y-2">
+            <input type="text" id="popupFirstName" name="firstName" placeholder="First name" required class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500" />
+            <input type="text" id="popupLastName" name="lastName" placeholder="Last name" required class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500" />
+            <input type="email" id="popupEmail" name="email" placeholder="Email" required class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500" />
+            <button type="submit" class="w-full bg-brand-600 text-white py-2 px-4 rounded-lg font-semibold hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500 flex items-center justify-center text-sm">
+              Send Me the Explainer Video
+            </button>
+          </form>
+          <p class="text-xs text-slate-600 mt-2">We HATE spam. Your email address is 100% secure.</p>
+        </div>
+        
+        <div class="text-center pb-4">
+          <p class="text-xs text-slate-600">With over 500,000 members worldwide and a 4.8 Trustpilot rating, this platform gives you leverage, lifestyle, and legacy. Watch the quick overview and see why the door is open wider than ever.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Video Modal -->
+  <div id="videoModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4">
+    <div class="absolute inset-0 bg-black/70" data-close></div>
+    <div class="relative bg-white max-w-4xl w-full rounded-2xl shadow-2xl overflow-hidden">
+      <div class="flex items-center justify-between px-6 py-4 border-b border-slate-200">
+        <h3 class="text-xl font-bold text-slate-800">Watch the Overview</h3>
+        <button class="p-2 rounded-lg hover:bg-slate-100 text-slate-600" data-close aria-label="Close">✕</button>
+      </div>
+      <div class="aspect-video">
+        <!-- Replace this iframe src with your YouTube or Vimeo video URL -->
+        <iframe 
+          id="videoFrame"
+          class="w-full h-full" 
+          src="" 
+          title="Overview video" 
+          allow="autoplay; fullscreen; picture-in-picture" 
+          allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Supabase Configuration
+    const SUPABASE_URL = 'https://jxytzukoqwmcrlldsbpo.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp4eXR6dWtvcXdtY3JsbGRzYnBvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA3MDg2ODEsImV4cCI6MjA3NjI4NDY4MX0.movYhVr-GJlznL9Bcxs9Zh-yLmdhYBRzSh3I8GfwyP8'; // Replace with your real anon key from Supabase dashboard
+    
+    // Initialize Supabase client
+    const { createClient } = supabase;
+    const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    
+    // Test Supabase connection
+    async function testSupabaseConnection() {
+      try {
+        console.log('Testing Supabase connection...');
+        const { data, error } = await supabaseClient
+          .from('leads')
+          .select('count')
+          .limit(1);
+        
+        if (error) {
+          console.error('❌ Supabase connection failed:', error.message);
+          alert(`Supabase connection failed: ${error.message}`);
+        } else {
+          console.log('✅ Supabase connection successful!');
+          console.log('Connection test result:', data);
+        }
+      } catch (err) {
+        console.error('❌ Supabase connection error:', err);
+        alert(`Connection error: ${err.message}`);
+      }
+    }
+    
+    // Run connection test when page loads
+    testSupabaseConnection();
+    
+    // Year stamp
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Popup Modal Logic
+    const popupModal = document.getElementById('popupModal');
+    const watchDemoBtn = document.getElementById('watchDemo');
+    const showPopupBtn = document.getElementById('showPopupBtn');
+    const heroWatchBtn = document.getElementById('heroWatchBtn');
+    const heroMainBtn = document.getElementById('heroMainBtn');
+    
+    // Check if popup was already shown in this session
+    const popupShown = sessionStorage.getItem('popupShown');
+    
+    // Show popup after 3 seconds if not already shown
+    if (!popupShown) {
+      setTimeout(() => {
+        showPopup();
+      }, 3000);
+    }
+    
+    // Exit intent detection
+    let exitIntentShown = false;
+    document.addEventListener('mouseleave', (e) => {
+      if (e.clientY <= 0 && !exitIntentShown && !popupShown) {
+        showPopup();
+        exitIntentShown = true;
+      }
+    });
+    
+    // Show popup function
+    function showPopup() {
+      popupModal.classList.remove('hidden');
+      popupModal.classList.add('flex');
+      sessionStorage.setItem('popupShown', 'true');
+    }
+    
+    // Close popup function
+    function closePopup() {
+      popupModal.classList.add('hidden');
+      popupModal.classList.remove('flex');
+    }
+    
+    // Close popup when clicking outside or on close button
+    popupModal.addEventListener('click', (e) => {
+      if (e.target.hasAttribute('data-close') || e.target === popupModal.querySelector('.absolute')) {
+        closePopup();
+      }
+    });
+    
+    // Close popup with Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !popupModal.classList.contains('hidden')) {
+        closePopup();
+      }
+    });
+    
+    // Show popup button
+    if (showPopupBtn) {
+      showPopupBtn.addEventListener('click', () => {
+        showPopup();
+      });
+    }
+    
+    // Hero watch button - now triggers video modal
+    if (heroWatchBtn) {
+      heroWatchBtn.addEventListener('click', () => {
+        // Set your video URL here - replace with your YouTube or Vimeo embed URL
+        const videoUrl = 'https://www.youtube.com/embed/YOUR_VIDEO_ID_HERE'; // Replace with your video
+        videoFrame.src = videoUrl;
+        
+        videoModal.classList.remove('hidden');
+        videoModal.classList.add('flex');
+      });
+    }
+    
+    // Hero main button
+    if (heroMainBtn) {
+      heroMainBtn.addEventListener('click', () => {
+        showPopup();
+      });
+    }
+    
+    // CTA popup button
+    const ctaPopupBtn = document.getElementById('ctaPopupBtn');
+    if (ctaPopupBtn) {
+      ctaPopupBtn.addEventListener('click', () => {
+        showPopup();
+      });
+    }
+    
+    // Video Modal Logic
+    const videoModal = document.getElementById('videoModal');
+    const videoFrame = document.getElementById('videoFrame');
+    
+    // Watch demo button (video modal)
+    if (watchDemoBtn) {
+      watchDemoBtn.addEventListener('click', () => {
+        // Set your video URL here - replace with your YouTube or Vimeo embed URL
+        const videoUrl = 'https://www.youtube.com/embed/YOUR_VIDEO_ID_HERE'; // Replace with your video
+        videoFrame.src = videoUrl;
+        
+        videoModal.classList.remove('hidden');
+        videoModal.classList.add('flex');
+      });
+    }
+    
+    // Close video modal
+    if (videoModal) {
+      videoModal.addEventListener('click', (e) => {
+        if (e.target.hasAttribute('data-close') || e.target === videoModal.querySelector('.absolute')) {
+          videoModal.classList.add('hidden');
+          videoModal.classList.remove('flex');
+          // Stop video when modal closes
+          videoFrame.src = '';
+        }
+      });
+    }
+    
+    // Form submission handling with Supabase
+    const popupForm = document.getElementById('popupForm');
+    if (popupForm) {
+      popupForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const firstName = document.getElementById('popupFirstName').value;
+        const lastName = document.getElementById('popupLastName').value;
+        const email = document.getElementById('popupEmail').value;
+        
+        try {
+          console.log('Attempting to submit to Supabase:', { firstName, lastName, email });
+          
+          // Submit to Supabase
+          const { data, error } = await supabaseClient
+            .from('leads')
+            .insert([
+              { 
+                first_name: firstName,
+                last_name: lastName, 
+                email: email,
+                source: 'popup',
+                created_at: new Date().toISOString()
+              }
+            ]);
+          
+          if (error) {
+            console.error('Supabase Error:', error);
+            if (error.code === '23505' && error.message.includes('duplicate key')) {
+              // Email already exists - show appropriate message
+              alert(`Welcome back ${firstName}! You're already in our system. Check your email for the video explainer.`);
+              closePopup();
+              return;
+            }
+            alert(`Supabase Error: ${error.message}`);
+            return;
+          }
+          
+          console.log('Supabase Success:', data);
+          // Success - show thank you message
+          alert(`Thank you ${firstName} ${lastName}! Check your email for the video explainer.`);
+          closePopup();
+          
+        } catch (err) {
+          console.error('Submission error:', err);
+          alert(`Connection Error: ${err.message}`);
+        }
+      });
+    }
+    
+    // Testimonial Slider Logic
+    let currentSlide = 0;
+    const sliderContainer = document.getElementById('sliderContainer');
+    const dots = document.querySelectorAll('.dot');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const slides = document.querySelectorAll('.testimonial-slide');
+    const totalSlides = slides.length;
+    let autoSlideInterval;
+    let isTransitioning = false;
+
+    // Initialize slider
+    function initSlider() {
+      if (!sliderContainer || totalSlides === 0) {
+        console.warn('Slider elements not found, skipping initialization.');
+        return;
+      }
+      updateSlider();
+      startAutoSlide();
+    }
+
+    function updateSlider() {
+      if (isTransitioning) return;
+      isTransitioning = true;
+
+      const translateX = -currentSlide * 100;
+      sliderContainer.style.transform = `translateX(${translateX}%)`;
+
+      dots.forEach((dot, i) => {
+        dot.classList.remove('active', 'bg-brand-500');
+        dot.classList.add('bg-slate-300');
+
+        if (i === currentSlide) {
+          dot.classList.add('active', 'bg-brand-500');
+          dot.classList.remove('bg-slate-300');
+        }
+      });
+
+      const currentSlideElement = slides[currentSlide];
+      if (currentSlideElement) {
+        currentSlideElement.classList.add('slide-enter');
+        setTimeout(() => {
+          currentSlideElement.classList.remove('slide-enter');
+        }, 600);
+      }
+
+      setTimeout(() => {
+        isTransitioning = false;
+      }, 600);
+    }
+
+    function nextSlide() {
+      if (isTransitioning) return;
+      currentSlide = (currentSlide + 1) % totalSlides;
+      updateSlider();
+      resetAutoSlide();
+    }
+
+    function prevSlide() {
+      if (isTransitioning) return;
+      currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+      updateSlider();
+      resetAutoSlide();
+    }
+
+    function goToSlide(index) {
+      if (isTransitioning || index === currentSlide) return;
+      currentSlide = index;
+      updateSlider();
+      resetAutoSlide();
+    }
+
+    function startAutoSlide() {
+      stopAutoSlide();
+      autoSlideInterval = setInterval(nextSlide, 4000);
+    }
+
+    function stopAutoSlide() {
+      clearInterval(autoSlideInterval);
+    }
+
+    function resetAutoSlide() {
+      stopAutoSlide();
+      startAutoSlide();
+    }
+
+    // Event Listeners
+    if (nextBtn) {
+      nextBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        nextSlide();
+        // Add click animation
+        nextBtn.style.transform = 'translateY(-50%) scale(0.95)';
+        setTimeout(() => {
+          nextBtn.style.transform = 'translateY(-50%) scale(1)';
+        }, 150);
+      });
+    }
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        prevSlide();
+        // Add click animation
+        prevBtn.style.transform = 'translateY(-50%) scale(0.95)';
+        setTimeout(() => {
+          prevBtn.style.transform = 'translateY(-50%) scale(1)';
+        }, 150);
+      });
+    }
+
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        goToSlide(index);
+        // Add ripple effect
+        dot.style.transform = 'scale(1.5)';
+        setTimeout(() => {
+          dot.style.transform = 'scale(1)';
+        }, 200);
+      });
+    });
+
+    // Advanced Touch/Swipe Support
+    let startX = 0;
+    let startY = 0;
+    let endX = 0;
+    let endY = 0;
+    let isDragging = false;
+
+    const slider = document.querySelector('.testimonial-slider');
+    if (slider) {
+      slider.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+        isDragging = true;
+        stopAutoSlide();
+      });
+
+      slider.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+      });
+
+      slider.addEventListener('touchend', (e) => {
+        if (!isDragging) return;
+        endX = e.changedTouches[0].clientX;
+        endY = e.changedTouches[0].clientY;
+        handleSwipe();
+        isDragging = false;
+        startAutoSlide();
+      });
+
+      slider.addEventListener('mousedown', (e) => {
+        startX = e.clientX;
+        startY = e.clientY;
+        isDragging = true;
+        stopAutoSlide();
+        e.preventDefault();
+      });
+
+      slider.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+      });
+
+      slider.addEventListener('mouseup', (e) => {
+        if (!isDragging) return;
+        endX = e.clientX;
+        endY = e.clientY;
+        handleSwipe();
+        isDragging = false;
+        startAutoSlide();
+      });
+
+      slider.addEventListener('mouseleave', () => {
+        isDragging = false;
+        startAutoSlide();
+      });
+
+      function handleSwipe() {
+        const diffX = startX - endX;
+        const diffY = startY - endY;
+        const swipeThreshold = 50;
+
+        if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > swipeThreshold) {
+          if (diffX > 0) {
+            nextSlide();
+          } else {
+            prevSlide();
+          }
+        }
+      }
+    }
+
+    // Keyboard Navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') {
+        prevSlide();
+        resetAutoSlide();
+      } else if (e.key === 'ArrowRight') {
+        nextSlide();
+        resetAutoSlide();
+      }
+    });
+
+    // Pause on hover
+    if (slider) {
+      slider.addEventListener('mouseenter', stopAutoSlide);
+      slider.addEventListener('mouseleave', startAutoSlide);
+    }
+
+    // Initialize the slider when DOM is ready
+    document.addEventListener('DOMContentLoaded', initSlider);
+  </script>
+</body>
+</html>
