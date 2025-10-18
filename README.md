@@ -13,7 +13,7 @@ A modern, responsive landing page for capturing leads interested in travel and l
 
 1. **Clone or download this repository**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/Smeltzer43/sales-funnel.git
    cd sales-funnel
    ```
 
