@@ -124,85 +124,92 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
     
-    /* Mobile optimizations */
+    /* Modern Mobile-First Testimonial Slider */
     @media (max-width: 768px) {
+      /* Mobile: Single card layout */
+      .testimonial-slider {
+        height: auto;
+        min-height: 500px;
+      }
+      
       .testimonial-slide {
-        padding: 0.5rem;
-        overflow: hidden;
+        padding: 1rem;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
         height: auto;
         min-height: 400px;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
       }
       
-      .nav-btn {
-        padding: 0.5rem;
-        z-index: 20;
-      }
-      
-      .nav-btn svg {
-        width: 1rem;
-        height: 1rem;
-      }
-      
-      /* Mobile: Show only ONE card at a time - force single column */
+      /* Mobile grid: Single column, single card */
       .testimonial-slide .grid {
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important;
-        justify-content: center !important;
-        max-width: 100%;
-        width: 100%;
-        margin: 0 auto;
-        gap: 0 !important;
+        display: grid !important;
         grid-template-columns: 1fr !important;
-      }
-      
-      /* Mobile card styling - full width, vertical layout */
-      .testimonial-slide .bg-white {
-        max-width: 100% !important;
-        width: 100% !important;
-        min-width: 0;
-        margin: 0 auto;
-        padding: 1.5rem;
-        word-wrap: break-word;
-        overflow-wrap: break-word;
-        hyphens: auto;
-        box-sizing: border-box;
-        display: block;
-        flex-shrink: 0;
-      }
-      
-      .testimonial-slide p {
-        word-wrap: break-word;
-        overflow-wrap: break-word;
-        hyphens: auto;
+        grid-template-rows: 1fr !important;
+        gap: 0 !important;
+        width: 100%;
         max-width: 100%;
-        line-height: 1.5;
-        font-size: 0.9rem;
-        margin-bottom: 0.75rem;
+        margin: 0;
+        padding: 0;
       }
       
-      /* CRITICAL: Hide all cards except the first one on mobile */
-      .testimonial-slide .bg-white:nth-child(n+2) {
-        display: none !important;
-      }
-      
-      /* Ensure grid shows only first card */
+      /* Mobile: Show only the first testimonial card */
       .testimonial-slide .grid > *:nth-child(n+2) {
         display: none !important;
       }
       
-      /* Force single card display on mobile */
-      .testimonial-slide .grid {
-        grid-template-columns: 1fr !important;
-        grid-template-rows: 1fr !important;
+      /* Mobile card styling */
+      .testimonial-slide .bg-white {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 1.5rem !important;
+        box-sizing: border-box;
+        display: block !important;
       }
       
-      /* Hide all but first testimonial card on mobile */
-      .testimonial-slide .bg-white:not(:first-child) {
-        display: none !important;
+      /* Mobile text styling */
+      .testimonial-slide p {
+        font-size: 1rem;
+        line-height: 1.6;
+        margin-bottom: 1rem;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+      }
+      
+      /* Mobile navigation */
+      .nav-btn {
+        padding: 0.75rem;
+        z-index: 30;
+        background: rgba(255, 255, 255, 0.95);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+      }
+      
+      .nav-btn svg {
+        width: 1.25rem;
+        height: 1.25rem;
+      }
+    }
+    
+    /* Desktop: Multiple cards layout */
+    @media (min-width: 769px) {
+      .testimonial-slide {
+        padding: 2rem;
+      }
+      
+      .testimonial-slide .grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      
+      .testimonial-slide .bg-white {
+        width: 100%;
+        max-width: 100%;
+        padding: 1.5rem;
       }
     }
     
@@ -953,7 +960,7 @@
     let isTransitioning = false;
     let rafId = null;
 
-    // Performance optimization: Use requestAnimationFrame for smooth animations
+    // Modern responsive slider update function
     function updateSlider() {
       if (isTransitioning) return;
       isTransitioning = true;
@@ -967,7 +974,7 @@
         const translateX = -currentSlide * 100;
         sliderContainer.style.transform = `translate3d(${translateX}%, 0, 0)`;
 
-        // Optimize dot updates
+        // Update dots
         dots.forEach((dot, i) => {
           const isActive = i === currentSlide;
           dot.classList.toggle('active', isActive);
@@ -975,8 +982,9 @@
           dot.classList.toggle('bg-slate-300', !isActive);
         });
 
-        // Debug logging
-        console.log(`Current slide: ${currentSlide}, Total slides: ${totalSlides}, TranslateX: ${translateX}%`);
+        // Enhanced debugging
+        console.log(`Slider Update - Current: ${currentSlide}, Total: ${totalSlides}, TranslateX: ${translateX}%`);
+        console.log(`Screen width: ${window.innerWidth}px, Mobile: ${window.innerWidth <= 768}`);
 
         // Use shorter transition time for better performance
         setTimeout(() => {
@@ -1040,6 +1048,15 @@
       updateSlider();
       startAutoSlide();
     }
+    
+    // Handle window resize for responsive slider
+    function handleResize() {
+      console.log('Window resized, updating slider...');
+      updateSlider();
+    }
+    
+    // Add resize listener
+    window.addEventListener('resize', handleResize);
 
     // Optimized Event Listeners
     if (nextBtn) {
