@@ -61,158 +61,98 @@
       transition: transform 240ms ease; 
     }
     
-    /* Modern Testimonial Slider Styles */
+    /* Optimized Testimonial Slider Styles */
     .testimonial-slider {
       position: relative;
       width: 100%;
       overflow: hidden;
       border-radius: 1rem;
       box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      /* Performance optimizations */
+      contain: layout style paint;
+      transform: translateZ(0);
     }
     
     .slider-container {
       display: flex;
-      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: transform 0.4s ease-out;
       will-change: transform;
+      /* Performance optimizations */
+      contain: layout style paint;
+      transform: translateZ(0);
     }
     
     .testimonial-slide {
       min-width: 100%;
       flex-shrink: 0;
-      padding: 2rem;
+      padding: 1rem;
       display: flex;
       align-items: center;
       justify-content: center;
+      /* Performance optimizations */
+      contain: layout style paint;
+      transform: translateZ(0);
     }
     
+    /* Optimized dot styles */
     .dot {
       cursor: pointer;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: background-color 0.2s ease;
       border: 2px solid transparent;
+      /* Performance optimizations */
+      will-change: background-color;
     }
     
     .dot:hover {
-      transform: scale(1.3);
       background-color: #0fb9b1 !important;
     }
     
     .dot.active {
       background-color: #0fb9b1 !important;
-      transform: scale(1.2);
     }
     
-    /* Navigation Button Styles */
+    /* Optimized navigation buttons */
     .nav-btn {
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: background-color 0.2s ease, box-shadow 0.2s ease;
       backdrop-filter: blur(10px);
+      /* Performance optimizations */
+      will-change: background-color, box-shadow;
     }
     
     .nav-btn:hover {
-      transform: translateY(-50%) scale(1.1);
       background-color: rgba(255, 255, 255, 0.95);
-      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
     
-    .nav-btn:active {
-      transform: translateY(-50%) scale(0.95);
-    }
-    
-    /* Slide Animation */
-    .slide-enter {
-      animation: slideIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    
-    @keyframes slideIn {
-      from {
-        opacity: 0;
-        transform: translateX(30px);
+    /* Mobile optimizations */
+    @media (max-width: 768px) {
+      .testimonial-slide {
+        padding: 0.75rem;
       }
-      to {
-        opacity: 1;
-        transform: translateX(0);
+      
+      .nav-btn {
+        padding: 0.5rem;
+      }
+      
+      .nav-btn svg {
+        width: 1rem;
+        height: 1rem;
       }
     }
     
-    /* Progress Bar */
-    .progress-bar {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      height: 3px;
-      background: linear-gradient(90deg, #0fb9b1, #ff9a8b);
-      transition: width 0.3s ease;
-      border-radius: 0 0 1rem 1rem;
-    }
-  /* Modern Testimonial Slider Styles */
-  .testimonial-slider {
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-    border-radius: 1rem;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-  }
-
-  .slider-container {
-    display: flex;
-    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    will-change: transform;
-  }
-
-  .testimonial-slide {
-    min-width: 100%;
-    flex-shrink: 0;
-    padding: 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .dot {
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    border: 2px solid transparent;
-  }
-
-  .dot:hover {
-    transform: scale(1.3);
-    background-color: #0fb9b1 !important;
-  }
-
-  .dot.active {
-    background-color: #0fb9b1 !important;
-    transform: scale(1.2);
-  }
-
-  /* Navigation Button Styles */
-  .nav-btn {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    backdrop-filter: blur(10px);
-  }
-
-  .nav-btn:hover {
-    transform: translateY(-50%) scale(1.1);
-    background-color: rgba(255, 255, 255, 0.95);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-  }
-
-  .nav-btn:active {
-    transform: translateY(-50%) scale(0.95);
-  }
-
-  /* Slide Animation */
-  .slide-enter {
-    animation: slideIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  @keyframes slideIn {
-    from {
-      opacity: 0;
-      transform: translateX(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
+    /* Reduced motion for accessibility */
+    @media (prefers-reduced-motion: reduce) {
+      .slider-container {
+        transition: none;
+      }
+      
+      .dot {
+        transition: none;
+      }
+      
+      .nav-btn {
+        transition: none;
+      }
     }
   </style>
 </head>
@@ -429,8 +369,8 @@
         <!-- Slider Container -->
         <div id="sliderContainer" class="slider-container flex">
           <!-- Slide 1: Testimonials 1-3 -->
-          <div class="testimonial-slide min-w-full flex-shrink-0 p-4 md:p-6 flex items-center justify-center">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 w-full max-w-4xl">
+          <div class="testimonial-slide min-w-full flex-shrink-0 p-2 md:p-4 flex items-center justify-center">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6 w-full max-w-4xl">
               <!-- Testimonial 1 -->
               <div class="bg-white rounded-xl p-4 md:p-6 shadow-lg hover:shadow-xl transition-shadow">
                 <div class="flex items-center mb-3 md:mb-4">
@@ -494,8 +434,8 @@
           </div>
 
           <!-- Slide 2: Testimonials 4-6 -->
-          <div class="testimonial-slide min-w-full flex-shrink-0 p-4 md:p-6 flex items-center justify-center">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 w-full max-w-4xl">
+          <div class="testimonial-slide min-w-full flex-shrink-0 p-2 md:p-4 flex items-center justify-center">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6 w-full max-w-4xl">
               <!-- Testimonial 4 -->
               <div class="bg-white rounded-xl p-4 md:p-6 shadow-lg hover:shadow-xl transition-shadow">
                 <div class="flex items-center mb-3 md:mb-4">
@@ -935,7 +875,7 @@
       });
     }
     
-    // Testimonial Slider Logic
+    // Optimized Testimonial Slider Logic
     let currentSlide = 0;
     const sliderContainer = document.getElementById('sliderContainer');
     const dots = document.querySelectorAll('.dot');
@@ -945,45 +885,35 @@
     const totalSlides = slides.length;
     let autoSlideInterval;
     let isTransitioning = false;
+    let rafId = null;
 
-    // Initialize slider
-    function initSlider() {
-      if (!sliderContainer || totalSlides === 0) {
-        console.warn('Slider elements not found, skipping initialization.');
-        return;
-      }
-      updateSlider();
-      startAutoSlide();
-    }
-
+    // Performance optimization: Use requestAnimationFrame for smooth animations
     function updateSlider() {
       if (isTransitioning) return;
       isTransitioning = true;
 
-      const translateX = -currentSlide * 100;
-      sliderContainer.style.transform = `translateX(${translateX}%)`;
-
-      dots.forEach((dot, i) => {
-        dot.classList.remove('active', 'bg-brand-500');
-        dot.classList.add('bg-slate-300');
-
-        if (i === currentSlide) {
-          dot.classList.add('active', 'bg-brand-500');
-          dot.classList.remove('bg-slate-300');
-        }
-      });
-
-      const currentSlideElement = slides[currentSlide];
-      if (currentSlideElement) {
-        currentSlideElement.classList.add('slide-enter');
-        setTimeout(() => {
-          currentSlideElement.classList.remove('slide-enter');
-        }, 600);
+      // Cancel any pending animation frame
+      if (rafId) {
+        cancelAnimationFrame(rafId);
       }
 
-      setTimeout(() => {
-        isTransitioning = false;
-      }, 600);
+      rafId = requestAnimationFrame(() => {
+        const translateX = -currentSlide * 100;
+        sliderContainer.style.transform = `translate3d(${translateX}%, 0, 0)`;
+
+        // Optimize dot updates
+        dots.forEach((dot, i) => {
+          const isActive = i === currentSlide;
+          dot.classList.toggle('active', isActive);
+          dot.classList.toggle('bg-brand-500', isActive);
+          dot.classList.toggle('bg-slate-300', !isActive);
+        });
+
+        // Use shorter transition time for better performance
+        setTimeout(() => {
+          isTransitioning = false;
+        }, 400);
+      });
     }
 
     function nextSlide() {
@@ -1009,7 +939,7 @@
 
     function startAutoSlide() {
       stopAutoSlide();
-      autoSlideInterval = setInterval(nextSlide, 4000);
+      autoSlideInterval = setInterval(nextSlide, 5000); // Increased interval for better UX
     }
 
     function stopAutoSlide() {
@@ -1021,16 +951,21 @@
       startAutoSlide();
     }
 
-    // Event Listeners
+    // Initialize slider
+    function initSlider() {
+      if (!sliderContainer || totalSlides === 0) {
+        console.warn('Slider elements not found, skipping initialization.');
+        return;
+      }
+      updateSlider();
+      startAutoSlide();
+    }
+
+    // Optimized Event Listeners
     if (nextBtn) {
       nextBtn.addEventListener('click', (e) => {
         e.preventDefault();
         nextSlide();
-        // Add click animation
-        nextBtn.style.transform = 'translateY(-50%) scale(0.95)';
-        setTimeout(() => {
-          nextBtn.style.transform = 'translateY(-50%) scale(1)';
-        }, 150);
       });
     }
 
@@ -1038,45 +973,33 @@
       prevBtn.addEventListener('click', (e) => {
         e.preventDefault();
         prevSlide();
-        // Add click animation
-        prevBtn.style.transform = 'translateY(-50%) scale(0.95)';
-        setTimeout(() => {
-          prevBtn.style.transform = 'translateY(-50%) scale(1)';
-        }, 150);
       });
     }
 
     dots.forEach((dot, index) => {
       dot.addEventListener('click', () => {
         goToSlide(index);
-        // Add ripple effect
-        dot.style.transform = 'scale(1.5)';
-        setTimeout(() => {
-          dot.style.transform = 'scale(1)';
-        }, 200);
       });
     });
 
-    // Advanced Touch/Swipe Support
+    // Optimized Touch/Swipe Support
     let startX = 0;
     let startY = 0;
     let endX = 0;
     let endY = 0;
     let isDragging = false;
+    let touchStartTime = 0;
 
     const slider = document.querySelector('.testimonial-slider');
     if (slider) {
+      // Touch events
       slider.addEventListener('touchstart', (e) => {
         startX = e.touches[0].clientX;
         startY = e.touches[0].clientY;
+        touchStartTime = Date.now();
         isDragging = true;
         stopAutoSlide();
-      });
-
-      slider.addEventListener('touchmove', (e) => {
-        if (!isDragging) return;
-        e.preventDefault();
-      });
+      }, { passive: true });
 
       slider.addEventListener('touchend', (e) => {
         if (!isDragging) return;
@@ -1085,18 +1008,15 @@
         handleSwipe();
         isDragging = false;
         startAutoSlide();
-      });
+      }, { passive: true });
 
+      // Mouse events (for desktop)
       slider.addEventListener('mousedown', (e) => {
         startX = e.clientX;
         startY = e.clientY;
+        touchStartTime = Date.now();
         isDragging = true;
         stopAutoSlide();
-        e.preventDefault();
-      });
-
-      slider.addEventListener('mousemove', (e) => {
-        if (!isDragging) return;
         e.preventDefault();
       });
 
@@ -1118,8 +1038,12 @@
         const diffX = startX - endX;
         const diffY = startY - endY;
         const swipeThreshold = 50;
+        const timeThreshold = 500; // Max swipe time
+        const swipeTime = Date.now() - touchStartTime;
 
-        if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > swipeThreshold) {
+        if (swipeTime < timeThreshold && 
+            Math.abs(diffX) > Math.abs(diffY) && 
+            Math.abs(diffX) > swipeThreshold) {
           if (diffX > 0) {
             nextSlide();
           } else {
@@ -1129,25 +1053,54 @@
       }
     }
 
-    // Keyboard Navigation
+    // Optimized keyboard navigation
     document.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      
       if (e.key === 'ArrowLeft') {
+        e.preventDefault();
         prevSlide();
         resetAutoSlide();
       } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
         nextSlide();
         resetAutoSlide();
       }
     });
 
-    // Pause on hover
-    if (slider) {
+    // Pause on hover (desktop only)
+    if (slider && window.innerWidth > 768) {
       slider.addEventListener('mouseenter', stopAutoSlide);
       slider.addEventListener('mouseleave', startAutoSlide);
     }
 
+    // Intersection Observer for performance
+    const observerOptions = {
+      root: null,
+      rootMargin: '50px',
+      threshold: 0.1
+    };
+
+    const sliderObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          startAutoSlide();
+        } else {
+          stopAutoSlide();
+        }
+      });
+    }, observerOptions);
+
+    if (slider) {
+      sliderObserver.observe(slider);
+    }
+
     // Initialize the slider when DOM is ready
-    document.addEventListener('DOMContentLoaded', initSlider);
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initSlider);
+    } else {
+      initSlider();
+    }
   </script>
 </body>
 </html>
