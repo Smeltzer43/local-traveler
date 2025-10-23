@@ -1098,7 +1098,7 @@
       });
     }
     
-    // Form submission handling with Supabase
+    // Form submission handling with Supabase Auth
     const popupForm = document.getElementById('popupForm');
     if (popupForm) {
       popupForm.addEventListener('submit', async (e) => {
@@ -1109,10 +1109,28 @@
         const email = document.getElementById('popupEmail').value;
         
         try {
-          console.log('Attempting to submit to Supabase:', { firstName, lastName, email });
+          console.log('Attempting to send magic link:', { firstName, lastName, email });
           
-          // Submit to Supabase
-          const { data, error } = await supabaseClient
+          // Send magic link using Supabase Auth
+          const { data: authData, error: authError } = await supabaseClient.auth.signInWithOtp({
+            email: email,
+            options: {
+              emailRedirectTo: `${window.location.origin}/learnmore.html`
+            }
+          });
+          
+          if (authError) {
+            console.error('Auth Error:', authError);
+            console.error('Full error details:', authError);
+            alert(`Error sending magic link: ${authError.message}\n\nCheck browser console for details. Make sure Supabase Auth is enabled in your project settings.`);
+            return;
+          }
+          
+          console.log('Magic link sent successfully:', authData);
+          console.log('Check your email for the magic link!');
+          
+          // Also store lead data in database
+          const { data: leadData, error: leadError } = await supabaseClient
             .from('leads')
             .insert([
               { 
@@ -1124,21 +1142,12 @@
               }
             ]);
           
-          if (error) {
-            console.error('Supabase Error:', error);
-            if (error.code === '23505' && error.message.includes('duplicate key')) {
-              // Email already exists - show appropriate message
-              alert(`Welcome back ${firstName}! You're already in our system. Check your email for the video explainer.`);
-              closePopup();
-              return;
-            }
-            alert(`Supabase Error: ${error.message}`);
-            return;
+          if (leadError) {
+            console.warn('Lead storage error (but magic link was sent):', leadError);
           }
           
-          console.log('Supabase Success:', data);
           // Success - show thank you message
-          alert(`Thank you ${firstName} ${lastName}! Check your email for the video explainer.`);
+          alert(`Thank you ${firstName}! Check your email for the magic link to access your video.`);
           closePopup();
           
         } catch (err) {

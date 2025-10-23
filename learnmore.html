@@ -10,18 +10,16 @@
       theme: {
         extend: {
           colors: {
-            'brand': {
-              50: '#f0fdfa',
-              100: '#ccfbf1',
-              200: '#99f6e4',
-              300: '#5eead4',
-              400: '#2dd4bf',
-              500: '#14b8a6',
-              600: '#0d9488',
-              700: '#0f766e',
-              800: '#115e59',
-              900: '#134e4a',
-            }
+            brand: {
+              50: '#e6fffb', 100: '#c8fff6', 200: '#96f2ea', 300: '#5ee9de', 400: '#2ed3c6',
+              500: '#0fb9b1', 600: '#0aa39c', 700: '#0a8a84', 800: '#0b6f6b', 900: '#0b5856'
+            },
+            peach: {
+              50: '#fff1f0', 100: '#ffe3e0', 200: '#ffcfc8', 300: '#ffb6a9', 400: '#ff9a8b',
+              500: '#ff816f', 600: '#f46b5d', 700: '#de594d', 800: '#c74a40', 900: '#a93a31'
+            },
+            'warm-teal': '#0fb9b1',
+            'pinky-peach': '#ff9a8b'
           }
         }
       }
@@ -61,15 +59,17 @@
       </div>
       <p class="text-slate-600 mb-6">First, let Chad & Christina introduce themselves and share their story of how they discovered this opportunity.</p>
       
-      <!-- Video Placeholder - Replace with actual YouTube embed -->
-      <div class="bg-slate-100 border-2 border-dashed border-slate-300 rounded-xl p-8 text-center mb-6">
-        <div class="text-slate-500 mb-4">
-          <svg class="w-16 h-16 mx-auto" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M8 5v14l11-7z"/>
-          </svg>
+      <!-- Chad & Christina Introduction Video -->
+      <div class="flex justify-center mb-6">
+        <div class="relative w-80 h-[600px] bg-black rounded-xl overflow-hidden">
+          <iframe 
+            src="https://www.youtube.com/embed/oL5W1uO6SKw" 
+            class="w-full h-full"
+            frameborder="0" 
+            allow="autoplay; fullscreen; picture-in-picture" 
+            allowfullscreen>
+          </iframe>
         </div>
-        <p class="text-slate-600 font-medium">Chad & Christina's Introduction Video</p>
-        <p class="text-sm text-slate-500">YouTube video will be embedded here</p>
       </div>
       
       <div class="bg-brand-50 border border-brand-200 rounded-lg p-4">
@@ -101,10 +101,36 @@
       </div>
     </div>
 
-    <!-- Step 3: Compensation Plan -->
+    <!-- Step 3: Chad & Christina Direct to Next Video -->
     <div class="bg-white rounded-2xl shadow-lg p-8 mb-8">
       <div class="flex items-center mb-6">
         <div class="flex items-center justify-center w-12 h-12 bg-brand-600 text-white rounded-full font-bold text-lg mr-4">3</div>
+        <h2 class="text-2xl font-bold text-slate-800">Your Next Video</h2>
+      </div>
+      <p class="text-slate-600 mb-6">Chad & Christina have a special message for you about what to watch next.</p>
+      
+      <!-- Chad & Christina Direct Video -->
+      <div class="flex justify-center mb-6">
+        <div class="relative w-80 h-[600px] bg-black rounded-xl overflow-hidden">
+          <iframe 
+            src="https://www.youtube.com/embed/h79QiAdeOJQ" 
+            class="w-full h-full"
+            frameborder="0" 
+            allow="autoplay; fullscreen; picture-in-picture" 
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+      
+      <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+        <p class="text-blue-800 text-sm">🎯 <strong>Next Step:</strong> Chad & Christina will guide you to your next important video in this sequence.</p>
+      </div>
+    </div>
+
+    <!-- Step 4: Compensation Plan -->
+    <div class="bg-white rounded-2xl shadow-lg p-8 mb-8">
+      <div class="flex items-center mb-6">
+        <div class="flex items-center justify-center w-12 h-12 bg-brand-600 text-white rounded-full font-bold text-lg mr-4">4</div>
         <h2 class="text-2xl font-bold text-slate-800">Compensation Plan</h2>
       </div>
       <p class="text-slate-600 mb-6">Finally, discover how you can earn income through this opportunity and what the compensation structure looks like.</p>
@@ -125,17 +151,43 @@
       </div>
     </div>
 
+    <!-- Step 5: Chad & Christina Final Call to Action -->
+    <div class="bg-white rounded-2xl shadow-lg p-8 mb-8">
+      <div class="flex items-center mb-6">
+        <div class="flex items-center justify-center w-12 h-12 bg-brand-600 text-white rounded-full font-bold text-lg mr-4">5</div>
+        <h2 class="text-2xl font-bold text-slate-800">Your Decision</h2>
+      </div>
+      <p class="text-slate-600 mb-6">Chad & Christina have one final message for you about choosing your next step.</p>
+      
+      <!-- Chad & Christina Final Video -->
+      <div class="flex justify-center mb-6">
+        <div class="relative w-80 h-[600px] bg-black rounded-xl overflow-hidden">
+          <iframe 
+            src="https://www.youtube.com/embed/Buf2XvkdEKs" 
+            class="w-full h-full"
+            frameborder="0" 
+            allow="autoplay; fullscreen; picture-in-picture" 
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+      
+      <div class="bg-purple-50 border border-purple-200 rounded-lg p-4">
+        <p class="text-purple-800 text-sm">🎯 <strong>Final Step:</strong> Chad & Christina will guide you to choose between accessing the member portal or scheduling a call.</p>
+      </div>
+    </div>
+
     <!-- Next Steps -->
     <div class="bg-gradient-to-r from-brand-600 to-brand-700 rounded-2xl shadow-lg p-8 text-white">
       <h2 class="text-2xl font-bold mb-4">Ready for Your Next Steps?</h2>
-      <p class="text-brand-100 mb-8">After watching all three videos, you're ready to take action! Choose your next step below.</p>
+      <p class="text-brand-100 mb-8">After watching all five videos, you're ready to take action! Choose your next step below.</p>
       
       <div class="grid md:grid-cols-2 gap-6">
         <!-- Access Page Link -->
         <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6">
           <h3 class="text-xl font-bold mb-3">🚀 Get Started</h3>
           <p class="text-brand-100 mb-4">Ready to join? Access your member portal and begin your journey.</p>
-          <a href="#" class="inline-flex items-center justify-center w-full bg-white text-brand-600 font-semibold px-6 py-3 rounded-lg hover:bg-brand-50 transition-colors">
+          <a href="https://www.mwrlife.com/thelocaltravelers/join" class="inline-flex items-center justify-center w-full bg-white text-brand-600 font-semibold px-6 py-3 rounded-lg hover:bg-brand-50 transition-colors">
             Access Member Portal
           </a>
         </div>
@@ -144,7 +196,7 @@
         <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6">
           <h3 class="text-xl font-bold mb-3">📅 Schedule a Call</h3>
           <p class="text-brand-100 mb-4">Have questions? Schedule a call with Chad & Christina.</p>
-          <a href="#" class="inline-flex items-center justify-center w-full bg-white text-brand-600 font-semibold px-6 py-3 rounded-lg hover:bg-brand-50 transition-colors">
+          <a href="https://calendly.com/christinaroberson/15min" class="inline-flex items-center justify-center w-full bg-white text-brand-600 font-semibold px-6 py-3 rounded-lg hover:bg-brand-50 transition-colors">
             Book a Call
           </a>
         </div>
@@ -152,6 +204,7 @@
       
       <div class="mt-6 text-center">
         <p class="text-brand-100 text-sm">Questions? Email us at <a href="mailto:crsmeltzer@gmail.com" class="underline hover:text-white">crsmeltzer@gmail.com</a></p>
+        <p class="text-brand-100 text-sm mt-2">Need to start over? <a href="index.html" class="underline hover:text-white">Return to Home Page</a></p>
       </div>
     </div>
   </main>
@@ -163,7 +216,66 @@
     </div>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
+    // Supabase Configuration
+    const SUPABASE_URL = 'https://jxytzukoqwmcrlldsbpo.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp4eXR6dWtvcXdtY3JsbGRzYnBvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA3MDg2ODEsImV4cCI6MjA3NjI4NDY4MX0.movYhVr-GJlznL9Bcxs9Zh-yLmdhYBRzSh3I8GfwyP8';
+    
+    // Initialize Supabase client
+    const { createClient } = supabase;
+    const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    
+    // Handle magic link authentication
+    async function handleAuthCallback() {
+      try {
+        const { data, error } = await supabaseClient.auth.getSession();
+        
+        if (error) {
+          console.error('Auth error:', error);
+          // If there's an auth error, redirect to home page
+          window.location.href = 'index.html';
+          return;
+        }
+        
+        if (data.session) {
+          console.log('User authenticated:', data.session.user.email);
+          // User is authenticated, show the content
+          document.body.style.display = 'block';
+          
+          // Store session info persistently
+          localStorage.setItem('authenticated', 'true');
+          localStorage.setItem('userEmail', data.session.user.email);
+          localStorage.setItem('authTimestamp', Date.now().toString());
+        } else {
+          // Check if user was previously authenticated (within last 7 days)
+          const wasAuthenticated = localStorage.getItem('authenticated');
+          const authTimestamp = localStorage.getItem('authTimestamp');
+          const sevenDaysAgo = Date.now() - (7 * 24 * 60 * 60 * 1000);
+          
+          if (wasAuthenticated === 'true' && authTimestamp && parseInt(authTimestamp) > sevenDaysAgo) {
+            console.log('User was previously authenticated within 7 days, allowing access');
+            document.body.style.display = 'block';
+            return;
+          }
+          
+          console.log('No active session or session expired, redirecting to home');
+          // Clear old auth data
+          localStorage.removeItem('authenticated');
+          localStorage.removeItem('userEmail');
+          localStorage.removeItem('authTimestamp');
+          // No active session, redirect to home page
+          window.location.href = 'index.html';
+        }
+      } catch (err) {
+        console.error('Auth callback error:', err);
+        window.location.href = 'index.html';
+      }
+    }
+    
+    // Run auth check when page loads
+    handleAuthCallback();
+    
     // Set current year
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
