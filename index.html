@@ -1182,8 +1182,7 @@
           
           if (authError) {
             console.error('Auth Error:', authError);
-            console.error('Full error details:', authError);
-            alert(`Error sending magic link: ${authError.message}\n\nCheck browser console for details. Make sure Supabase Auth is enabled in your project settings.`);
+            alert(`Sorry, there was an issue sending your magic link. Please try again.`);
             return;
           }
           
@@ -1219,18 +1218,13 @@
             console.log('Lead stored successfully:', leadData);
           }
           
-          // Success - show thank you message and redirect
+          // Success - show thank you message
           alert(`Thank you ${firstName}! Check your email for the magic link to access your video.`);
           closePopup();
           
-          // Redirect to home page after successful submission
-          setTimeout(() => {
-            window.location.href = 'index.html';
-          }, 1000);
-          
         } catch (err) {
           console.error('Submission error:', err);
-          alert(`Connection Error: ${err.message}`);
+          alert(`Sorry, there was a connection issue. Please try again.`);
         }
       });
     }
