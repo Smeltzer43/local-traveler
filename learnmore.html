@@ -214,14 +214,20 @@
     // Function to capture lead data when user authenticates
     async function captureLeadData(user) {
       try {
-        console.log('Capturing lead data for authenticated user:', user.email);
+        console.log('=== LEAD CAPTURE DEBUG ===');
+        console.log('User object:', user);
+        console.log('User email:', user.email);
+        console.log('User metadata:', user.user_metadata);
         
         // Check if lead already exists
+        console.log('Checking for existing lead...');
         const { data: existingLead, error: checkError } = await supabaseClient
           .from('leads')
           .select('id')
           .eq('email', user.email)
           .single();
+        
+        console.log('Existing lead check result:', { existingLead, checkError });
         
         if (checkError && checkError.code !== 'PGRST116') {
           console.error('Error checking existing lead:', checkError);
@@ -250,6 +256,13 @@
             }
           }
           
+          console.log('Creating new lead with data:', {
+            first_name: user.user_metadata?.first_name || user.user_metadata?.firstName || firstName,
+            last_name: user.user_metadata?.last_name || user.user_metadata?.lastName || lastName,
+            email: user.email,
+            source: 'magic_link_confirmed'
+          });
+          
           const { data: leadData, error: leadError } = await supabaseClient
             .from('leads')
             .insert([{
@@ -260,8 +273,16 @@
               created_at: new Date().toISOString()
             }]);
           
+          console.log('Lead insert result:', { leadData, leadError });
+          
           if (leadError) {
             console.error('Lead capture error:', leadError);
+            console.error('Error details:', {
+              message: leadError.message,
+              details: leadError.details,
+              hint: leadError.hint,
+              code: leadError.code
+            });
             console.error('This might be due to RLS policies. Check SUPABASE_RLS_POLICY_FIX.md for solution.');
           } else {
             console.log('Lead captured successfully:', leadData);
@@ -271,6 +292,28 @@
         }
       } catch (err) {
         console.error('Lead capture error:', err);
+        
+        // Fallback: Try to insert with basic data if the main method fails
+        console.log('Attempting fallback lead capture...');
+        try {
+          const { data: fallbackData, error: fallbackError } = await supabaseClient
+            .from('leads')
+            .insert([{
+              first_name: 'Unknown',
+              last_name: 'User',
+              email: user.email,
+              source: 'magic_link_confirmed_fallback',
+              created_at: new Date().toISOString()
+            }]);
+          
+          if (fallbackError) {
+            console.error('Fallback lead capture also failed:', fallbackError);
+          } else {
+            console.log('Fallback lead capture successful:', fallbackData);
+          }
+        } catch (fallbackErr) {
+          console.error('Fallback capture error:', fallbackErr);
+        }
       }
     }
     
