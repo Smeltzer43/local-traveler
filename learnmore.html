@@ -277,6 +277,7 @@
           localStorage.setItem('authTimestamp', Date.now().toString());
           
           // Capture lead data now that user is authenticated
+          console.log('User authenticated, attempting to capture lead data...');
           await captureLeadData(data.session.user);
         } else {
           // Check if user was previously authenticated (within last 7 days)
