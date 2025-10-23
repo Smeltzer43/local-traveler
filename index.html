@@ -1122,7 +1122,7 @@
           const { data: authData, error: authError } = await supabaseClient.auth.signInWithOtp({
             email: email,
             options: {
-              emailRedirectTo: `${window.location.origin}/learnmore.html`
+              emailRedirectTo: `https://thelocaltravelers.com/learnmore.html`
             }
           });
           
