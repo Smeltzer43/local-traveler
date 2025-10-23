@@ -924,18 +924,19 @@
         <h3 class="text-xl font-bold text-slate-800">C&C Travel & Lifestyle Introduction</h3>
         <button class="p-2 rounded-lg hover:bg-slate-100 text-slate-600" data-close aria-label="Close">✕</button>
       </div>
-      <div class="aspect-[9/16] max-h-[80vh] flex justify-center">
-        <!-- YouTube Shorts video - optimized for vertical format -->
-        <iframe 
-          id="videoFrame"
-          class="w-full h-full max-w-sm" 
-          src="" 
-          title="Chad & Christina's Intro Video" 
-          allow="autoplay; fullscreen; picture-in-picture" 
-          allowfullscreen
-          onload="console.log('Video iframe loaded successfully')"
-          onerror="console.error('Error loading video iframe')">
-        </iframe>
+      <div class="flex justify-center mb-6">
+        <div class="relative w-80 h-[600px] bg-black rounded-xl overflow-hidden">
+          <iframe 
+            id="videoFrame"
+            class="w-full h-full" 
+            src="" 
+            title="Chad & Christina's Intro Video" 
+            allow="autoplay; fullscreen; picture-in-picture" 
+            allowfullscreen
+            onload="console.log('Video iframe loaded successfully')"
+            onerror="console.error('Error loading video iframe')">
+          </iframe>
+        </div>
       </div>
     </div>
   </div>
