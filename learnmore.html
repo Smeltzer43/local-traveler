@@ -31,11 +31,11 @@
   <header class="bg-white shadow-sm border-b border-brand-100">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
       <div class="flex items-center justify-between">
-        <a href="index.html" class="flex items-center gap-2 font-semibold tracking-tight">
+        <a href="index.html" class="flex items-center gap-2 font-semibold tracking-tight" onclick="return confirmNavigation(event)">
           <span class="inline-flex h-9 w-9 items-center justify-center rounded-full bg-brand-100 text-brand-700">LT</span>
           <span class="text-brand-800">The Local Travelers</span>
         </a>
-        <a href="index.html" class="text-brand-600 hover:text-brand-700 font-medium" onclick="return confirmNavigation()">← Back to Home</a>
+        <a href="index.html" class="text-brand-600 hover:text-brand-700 font-medium" onclick="return confirmNavigation(event)">← Back to Home</a>
       </div>
     </div>
   </header>
@@ -189,7 +189,7 @@
       
       <div class="mt-6 text-center">
         <p class="text-brand-100 text-sm">Questions? Email us at <a href="mailto:crsmeltzer@gmail.com" class="underline hover:text-white">crsmeltzer@gmail.com</a></p>
-        <p class="text-brand-100 text-sm mt-2">Need to start over? <a href="index.html" class="underline hover:text-white" onclick="return confirmNavigation()">Return to Home Page</a></p>
+        <p class="text-brand-100 text-sm mt-2">Need to start over? <a href="index.html" class="underline hover:text-white" onclick="return confirmNavigation(event)">Return to Home Page</a></p>
       </div>
     </div>
   </main>
@@ -311,13 +311,25 @@
     document.getElementById('year').textContent = new Date().getFullYear();
     
     // Function to confirm navigation away from the page
-    function confirmNavigation() {
+    function confirmNavigation(event) {
+      // Prevent default navigation
+      if (event) {
+        event.preventDefault();
+      }
+      
       const confirmed = confirm(
         "Are you sure you want to leave this page?\n\n" +
         "You'll need to use your magic link again to access these videos.\n\n" +
         "If you haven't finished watching all the videos, we recommend staying on this page to complete your journey."
       );
-      return confirmed;
+      
+      if (confirmed) {
+        // User confirmed, allow navigation
+        window.location.href = 'index.html';
+      }
+      // If not confirmed, do nothing (stay on page)
+      
+      return false; // Always return false to prevent default link behavior
     }
   </script>
 </body>
