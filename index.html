@@ -1158,11 +1158,15 @@
         try {
           console.log('Attempting to send magic link:', { firstName, lastName, email });
           
-          // Send magic link using Supabase Auth
+          // Send magic link using Supabase Auth with user metadata
           const { data: authData, error: authError } = await supabaseClient.auth.signInWithOtp({
             email: email,
             options: {
-              emailRedirectTo: `https://thelocaltravelers.com/learnmore.html`
+              emailRedirectTo: `https://thelocaltravelers.com/learnmore.html`,
+              data: {
+                first_name: firstName,
+                last_name: lastName
+              }
             }
           });
           
@@ -1175,6 +1179,14 @@
           
           console.log('Magic link sent successfully:', authData);
           console.log('Check your email for the magic link!');
+          
+          // Store form data in localStorage as backup
+          localStorage.setItem('pendingLeadData', JSON.stringify({
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            timestamp: Date.now()
+          }));
           
           // Also store lead data in database
           const { data: leadData, error: leadError } = await supabaseClient
