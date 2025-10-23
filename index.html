@@ -932,7 +932,9 @@
           src="" 
           title="Chad & Christina's Intro Video" 
           allow="autoplay; fullscreen; picture-in-picture" 
-          allowfullscreen>
+          allowfullscreen
+          onload="console.log('Video iframe loaded successfully')"
+          onerror="console.error('Error loading video iframe')">
         </iframe>
       </div>
     </div>
@@ -1048,8 +1050,10 @@
       heroWatchBtn.addEventListener('click', () => {
         // Set your video URL here - replace with your YouTube or Vimeo embed URL
         const videoUrl = 'https://www.youtube.com/embed/dD7wbaQZ-X4'; // YouTube Shorts video
+        console.log('Setting video URL:', videoUrl);
         videoFrame.src = videoUrl;
         
+        console.log('Showing video modal');
         videoModal.classList.remove('hidden');
         videoModal.classList.add('flex');
       });
@@ -1079,8 +1083,10 @@
       watchDemoBtn.addEventListener('click', () => {
         // Set your video URL here - replace with your YouTube or Vimeo embed URL
         const videoUrl = 'https://www.youtube.com/embed/dD7wbaQZ-X4'; // YouTube Shorts video
+        console.log('Setting video URL:', videoUrl);
         videoFrame.src = videoUrl;
         
+        console.log('Showing video modal');
         videoModal.classList.remove('hidden');
         videoModal.classList.add('flex');
       });
