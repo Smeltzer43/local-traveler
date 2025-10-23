@@ -1190,7 +1190,11 @@
             ]);
           
           if (leadError) {
-            console.warn('Lead storage error (but magic link was sent):', leadError);
+            console.error('Lead storage error:', leadError);
+            console.error('This might be due to RLS policies. Check SUPABASE_RLS_POLICY_FIX.md for solution.');
+            // Don't show error to user since magic link was sent successfully
+          } else {
+            console.log('Lead stored successfully:', leadData);
           }
           
           // Success - show thank you message
