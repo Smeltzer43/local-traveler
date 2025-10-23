@@ -35,7 +35,7 @@
           <span class="inline-flex h-9 w-9 items-center justify-center rounded-full bg-brand-100 text-brand-700">LT</span>
           <span class="text-brand-800">The Local Travelers</span>
         </a>
-        <a href="index.html" class="text-brand-600 hover:text-brand-700 font-medium">← Back to Home</a>
+        <a href="index.html" class="text-brand-600 hover:text-brand-700 font-medium" onclick="return confirmNavigation()">← Back to Home</a>
       </div>
     </div>
   </header>
@@ -189,7 +189,7 @@
       
       <div class="mt-6 text-center">
         <p class="text-brand-100 text-sm">Questions? Email us at <a href="mailto:crsmeltzer@gmail.com" class="underline hover:text-white">crsmeltzer@gmail.com</a></p>
-        <p class="text-brand-100 text-sm mt-2">Need to start over? <a href="index.html" class="underline hover:text-white">Return to Home Page</a></p>
+        <p class="text-brand-100 text-sm mt-2">Need to start over? <a href="index.html" class="underline hover:text-white" onclick="return confirmNavigation()">Return to Home Page</a></p>
       </div>
     </div>
   </main>
@@ -210,6 +210,49 @@
     // Initialize Supabase client
     const { createClient } = supabase;
     const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    
+    // Function to capture lead data when user authenticates
+    async function captureLeadData(user) {
+      try {
+        console.log('Capturing lead data for authenticated user:', user.email);
+        
+        // Check if lead already exists
+        const { data: existingLead, error: checkError } = await supabaseClient
+          .from('leads')
+          .select('id')
+          .eq('email', user.email)
+          .single();
+        
+        if (checkError && checkError.code !== 'PGRST116') {
+          console.error('Error checking existing lead:', checkError);
+          return;
+        }
+        
+        // If lead doesn't exist, create it
+        if (!existingLead) {
+          const { data: leadData, error: leadError } = await supabaseClient
+            .from('leads')
+            .insert([{
+              first_name: user.user_metadata?.first_name || 'Unknown',
+              last_name: user.user_metadata?.last_name || 'User',
+              email: user.email,
+              source: 'magic_link_confirmed',
+              created_at: new Date().toISOString()
+            }]);
+          
+          if (leadError) {
+            console.error('Lead capture error:', leadError);
+            console.error('This might be due to RLS policies. Check SUPABASE_RLS_POLICY_FIX.md for solution.');
+          } else {
+            console.log('Lead captured successfully:', leadData);
+          }
+        } else {
+          console.log('Lead already exists for this email');
+        }
+      } catch (err) {
+        console.error('Lead capture error:', err);
+      }
+    }
     
     // Handle magic link authentication
     async function handleAuthCallback() {
@@ -232,6 +275,9 @@
           localStorage.setItem('authenticated', 'true');
           localStorage.setItem('userEmail', data.session.user.email);
           localStorage.setItem('authTimestamp', Date.now().toString());
+          
+          // Capture lead data now that user is authenticated
+          await captureLeadData(data.session.user);
         } else {
           // Check if user was previously authenticated (within last 7 days)
           const wasAuthenticated = localStorage.getItem('authenticated');
@@ -263,6 +309,16 @@
     
     // Set current year
     document.getElementById('year').textContent = new Date().getFullYear();
+    
+    // Function to confirm navigation away from the page
+    function confirmNavigation() {
+      const confirmed = confirm(
+        "Are you sure you want to leave this page?\n\n" +
+        "You'll need to use your magic link again to access these videos.\n\n" +
+        "If you haven't finished watching all the videos, we recommend staying on this page to complete your journey."
+      );
+      return confirmed;
+    }
   </script>
 </body>
 </html>
