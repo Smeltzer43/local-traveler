@@ -899,9 +899,9 @@
         <div class="bg-brand-50 rounded-xl p-3 mb-4">
           <h5 class="font-bold text-slate-800 mb-2 text-sm">Drop your best email below and get immediate access.</h5>
           <form id="popupForm" class="space-y-2">
-            <input type="text" id="popupFirstName" name="firstName" placeholder="First name" required class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500" />
-            <input type="text" id="popupLastName" name="lastName" placeholder="Last name" required class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500" />
-            <input type="email" id="popupEmail" name="email" placeholder="Email" required class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500" />
+            <input type="text" id="popupFirstName" name="firstName" placeholder="First name" required class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500" autocomplete="given-name" />
+            <input type="text" id="popupLastName" name="lastName" placeholder="Last name" required class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500" autocomplete="family-name" />
+            <input type="email" id="popupEmail" name="email" placeholder="Email" required class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500" autocomplete="email" />
             <button type="submit" class="w-full bg-brand-600 text-white py-2 px-4 rounded-lg font-semibold hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500 flex items-center justify-center text-sm">
               Send Me the Explainer Video
             </button>
@@ -1015,6 +1015,12 @@
       popupModal.classList.remove('hidden');
       popupModal.classList.add('flex');
       sessionStorage.setItem('popupShown', 'true');
+      
+      // Auto-focus first field for better UX
+      setTimeout(() => {
+        const firstNameInput = document.getElementById('popupFirstName');
+        if (firstNameInput) firstNameInput.focus();
+      }, 200);
     }
     
     // Handle window resize - no longer hide popup on mobile since buttons should work
@@ -1108,12 +1114,46 @@
     // Form submission handling with Supabase Auth
     const popupForm = document.getElementById('popupForm');
     if (popupForm) {
+      // Add form enhancement for better UX
+      const firstNameInput = document.getElementById('popupFirstName');
+      const lastNameInput = document.getElementById('popupLastName');
+      const emailInput = document.getElementById('popupEmail');
+      
+      // Auto-focus first field when popup opens
+      function focusFirstField() {
+        setTimeout(() => {
+          if (firstNameInput) firstNameInput.focus();
+        }, 100);
+      }
+      
+      // Add enter key navigation
+      firstNameInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          lastNameInput.focus();
+        }
+      });
+      
+      lastNameInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          emailInput.focus();
+        }
+      });
+      
+      emailInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          popupForm.dispatchEvent(new Event('submit'));
+        }
+      });
+      
       popupForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         
-        const firstName = document.getElementById('popupFirstName').value;
-        const lastName = document.getElementById('popupLastName').value;
-        const email = document.getElementById('popupEmail').value;
+        const firstName = firstNameInput.value.trim();
+        const lastName = lastNameInput.value.trim();
+        const email = emailInput.value.trim().toLowerCase();
         
         try {
           console.log('Attempting to send magic link:', { firstName, lastName, email });
