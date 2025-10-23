@@ -1029,6 +1029,16 @@
     function closePopup() {
       popupModal.classList.add('hidden');
       popupModal.classList.remove('flex');
+      sessionStorage.setItem('popupShown', 'true');
+      
+      // Clear any form data
+      const form = document.getElementById('popupForm');
+      if (form) {
+        form.reset();
+      }
+      
+      // Clear localStorage backup data
+      localStorage.removeItem('pendingLeadData');
     }
     
     // Close popup when clicking outside or on close button
@@ -1209,9 +1219,14 @@
             console.log('Lead stored successfully:', leadData);
           }
           
-          // Success - show thank you message
+          // Success - show thank you message and redirect
           alert(`Thank you ${firstName}! Check your email for the magic link to access your video.`);
           closePopup();
+          
+          // Redirect to home page after successful submission
+          setTimeout(() => {
+            window.location.href = 'index.html';
+          }, 1000);
           
         } catch (err) {
           console.error('Submission error:', err);
